@@ -24,3 +24,6 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* block scrolling */
+html, body {margin: 0; height: 100%; overflow: hidden}
