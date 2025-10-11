@@ -3,13 +3,13 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [lang, setLang] = useState<"en" | "ms" | "ta" | "hi">("en");
+  const [lang, setLang] = useState<"en" | "ms" | "ta" | "zh">("en");
 
   const langLabels: Record<string, string> = {
     en: "English",
     ms: "Malay",
     ta: "Tamil",
-    hi: "Hindi",
+    zh: "Mandarin",
   };
 
   const container: React.CSSProperties = {
@@ -48,6 +48,7 @@ export default function Home() {
     width: "100%",
     maxWidth: "840px",
     padding: "0 12px",
+    fontSize: "clamp(14px, 3.5vw, 22px)",
   };
 
   const actionButton = (bg = "#0b79f7", color = "#fff"): React.CSSProperties => ({
@@ -102,26 +103,89 @@ export default function Home() {
         <h1 style={headerStyle}>How May I Help You?</h1>
 
         <div style={buttonsWrap}>
-          <button
-            style={actionButton("#0b79f7")}
-            onClick={() => console.log("Report an Incident")}
-          >
-            Report an Incident
-          </button>
+          <div style={{ flex: 1, width: "100%" }}>
+            <button
+              style={actionButton("#0b79f7")}
+              onClick={() => console.log("Report an Incident")}
+            >
+              Report an Incident
+            </button>
 
-          <button
-            style={actionButton("#059669")}
-            onClick={() => console.log("Report a Lost Item")}
-          >
-            Report a Lost Item
-          </button>
+            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
 
-          <button
-            style={actionButton("#6b21a8")}
-            onClick={() => console.log("Contact an Officer")}
-          >
-            Contact an Officer
-          </button>
+            <div style={{ color: "#333", lineHeight: 1.8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🚦</span>
+                <span>Traffic Offence</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🧾</span>
+                <span>Theft</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>⚠️</span>
+                <span>Scam</span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ flex: 1, width: "100%" }}>
+            <button
+              style={actionButton("#059669")}
+              onClick={() => console.log("Report a Lost Item")}
+            >
+              Report a Lost Item
+            </button>
+
+            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
+
+            <div style={{ color: "#333", lineHeight: 1.8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🎒</span>
+                <span>Bags</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>📱</span>
+                <span>Electronics</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>💎</span>
+                <span>Valuables</span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ flex: 1, width: "100%" }}>
+            <button
+              style={actionButton("#6b21a8")}
+              onClick={() => console.log("Emergency")}
+            >
+              ⚠️
+              <br />
+              Emergency
+            </button>
+
+            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
+
+            <div style={{ color: "#333", lineHeight: 1.8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🚑</span>
+                <span>Injured Persons</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🔍</span>
+                <span>Missing Persons</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>🏥</span>
+                <span>Medical Emergency</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>👮‍♂️</span>
+                <span>Contact an Officer</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div style={{ marginTop: 6, fontSize: 16, color: "#333" }}>
@@ -138,7 +202,7 @@ export default function Home() {
       </div>
 
       <div style={bottomBar}>
-        {(["en", "ms", "ta", "hi"] as const).map((l) => (
+        {(["en", "ms", "ta", "zh"] as const).map((l) => (
           <button
             key={l}
             onClick={() => setLang(l)}
