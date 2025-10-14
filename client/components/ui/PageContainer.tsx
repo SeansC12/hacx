@@ -38,6 +38,24 @@ export function MainContentContainer({ children }: { children: React.ReactNode }
   )
 }
 
+export function TopContentContainer({ children }: { children: React.ReactNode }) {
+  const topArea: React.CSSProperties = {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "20px",
+    padding: "12px"
+  };
+  
+  return (
+    <div style={topArea}>
+      {children}
+    </div>
+  )
+}
+
 export function BottomContentContainer({ children }: { children: React.ReactNode }) {
   const bottomArea: React.CSSProperties = {
     width: "100%",
