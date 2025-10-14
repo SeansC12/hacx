@@ -12,37 +12,31 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field"
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
 export default function IncidentPage() {
-
-  const headerStyle: React.CSSProperties = {
-    fontSize: "clamp(28px, 6vw, 56px)",
-    fontWeight: 800,
-    textAlign: "center",
-    margin: 0,
-  };
-
-  const micIcon: React.CSSProperties = {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 28,
-    height: 28,
-    borderRadius: "50%",
-    background: "#ef4444",
-    color: "white",
-    marginLeft: 8,
-    marginRight: 8,
-  };
-
-  const bottomBar: React.CSSProperties = {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    gap: "12px",
-    padding: "12px",
-  };
-
   return (
     <PageContainer>
       <TopContentContainer>
@@ -61,6 +55,60 @@ export default function IncidentPage() {
 
       <MainContentContainer>
         <HeaderText>Report an Incident</HeaderText>
+
+        <FieldSet style={{ maxWidth: "50%", width: "100%" }}>
+          <FieldLegend>What best describes the incident?</FieldLegend>
+          <FieldGroup>
+            {/* these cards are arranged in a 3-wide grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "20px" }}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Accident</CardTitle>
+                  <CardDescription>Report an accident</CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Accident</CardTitle>
+                  <CardDescription>Report an accident</CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Accident</CardTitle>
+                  <CardDescription>Report an accident</CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Accident</CardTitle>
+                  <CardDescription>Report an accident</CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Accident</CardTitle>
+                  <CardDescription>Report an accident</CardDescription>
+                </CardHeader>
+              </Card>
+            </div>
+
+            {/* <Field>
+              <FieldLabel htmlFor="name">Full name</FieldLabel>
+              <Input id="name" autoComplete="off" placeholder="Evil Rabbit" />
+              <FieldDescription>This appears on invoices and emails.</FieldDescription>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="username">Username</FieldLabel>
+              <Input id="username" autoComplete="off" aria-invalid />
+              <FieldError>Choose another username.</FieldError>
+            </Field>
+            <Field orientation="horizontal">
+              <Switch id="newsletter" />
+              <FieldLabel htmlFor="newsletter">Subscribe to the newsletter</FieldLabel>
+            </Field> */}
+          </FieldGroup>
+        </FieldSet>
       </MainContentContainer>
 
       <BottomContentContainer>
