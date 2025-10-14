@@ -1,6 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ms" | "ta" | "zh">("en");
@@ -44,25 +54,12 @@ export default function Home() {
   const buttonsWrap: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
-    gap: "48px",
+    gap: "20px",
     width: "100%",
     maxWidth: "840px",
     padding: "0 12px",
     fontSize: "clamp(14px, 3.5vw, 22px)",
   };
-
-  const actionButton = (bg = "#0b79f7", color = "#fff"): React.CSSProperties => ({
-    background: bg,
-    color,
-    border: "none",
-    padding: "18px 20px",
-    borderRadius: "12px",
-    fontSize: "clamp(18px, 3.5vw, 28px)",
-    fontWeight: 700,
-    cursor: "pointer",
-    width: "100%",
-    boxShadow: "0 6px 18px rgba(11,121,247,0.18)",
-  });
 
   const micIcon: React.CSSProperties = {
     display: "inline-flex",
@@ -97,95 +94,38 @@ export default function Home() {
     textAlign: "center",
   });
 
+  function ButtonCard(title: string, options: Array<string>, color: string, action: () => void) {
+    return (
+      <div style={{ flex: 1, width: "100%" }}>
+        <Card
+          onClick={action}
+          style={{ cursor: "pointer",  }}
+          className={color}
+        >
+        <CardHeader style={{ fontSize: "clamp(18px, 3.5vw, 28px)", fontWeight: 700, textAlign: "center" }}>{title}</CardHeader>
+        <CardContent>
+          <div style={{ color: "#333", lineHeight: 1.8 }}>
+            {options.map((option, idx) => (
+              <div key={idx} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span>{option}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      </div>
+    );
+  }
+
   return (
     <div style={container}>
       <div style={centerArea}>
         <h1 style={headerStyle}>How May I Help You?</h1>
 
         <div style={buttonsWrap}>
-          <div style={{ flex: 1, width: "100%" }}>
-            <button
-              style={actionButton("#0b79f7")}
-              onClick={() => console.log("Report an Incident")}
-            >
-              Report an Incident
-            </button>
-
-            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
-
-            <div style={{ color: "#333", lineHeight: 1.8 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🚦</span>
-                <span>Traffic Offence</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🧾</span>
-                <span>Theft</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>⚠️</span>
-                <span>Scam</span>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ flex: 1, width: "100%" }}>
-            <button
-              style={actionButton("#059669")}
-              onClick={() => console.log("Report a Lost Item")}
-            >
-              Report a Lost Item
-            </button>
-
-            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
-
-            <div style={{ color: "#333", lineHeight: 1.8 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🎒</span>
-                <span>Bags</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>📱</span>
-                <span>Electronics</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>💎</span>
-                <span>Valuables</span>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ flex: 1, width: "100%" }}>
-            <button
-              style={actionButton("#6b21a8")}
-              onClick={() => console.log("Emergency")}
-            >
-              ⚠️
-              <br />
-              Emergency
-            </button>
-
-            <hr style={{ border: "none", height: 1, background: "#e5e7eb", margin: "20px 0" }} />
-
-            <div style={{ color: "#333", lineHeight: 1.8 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🚑</span>
-                <span>Injured Persons</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🔍</span>
-                <span>Missing Persons</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>🏥</span>
-                <span>Medical Emergency</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span>👮‍♂️</span>
-                <span>Contact an Officer</span>
-              </div>
-            </div>
-          </div>
+          {ButtonCard("Report an Incident", ["🚦 Traffic Offence", "🧾 Theft", "⚠️ Scam"], "bg-red-200", () => console.log("Report an Incident"))}
+          {ButtonCard("Report a Lost Item", ["🎒 Bags", "📱 Electronics", "💎 Valuables"], "bg-green-200", () => console.log("Report a Lost Item"))}
+          {ButtonCard("⚠️\nEmergency", ["🚑 Injured Persons", "🔍 Missing Persons", "🏥 Medical Emergency", "👮‍♂️ Contact an Officer"], "bg-purple-200", () => console.log("Report a Lost Item"))}
         </div>
 
         <div style={{ marginTop: 6, fontSize: 16, color: "#333" }}>
