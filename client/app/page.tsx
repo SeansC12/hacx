@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Separator } from "@radix-ui/react-separator";
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ms" | "ta" | "zh">("en");
@@ -83,12 +84,9 @@ export default function Home() {
   };
 
   const langButton = (active = false): React.CSSProperties => ({
-    padding: "8px 14px",
-    borderRadius: 10,
     border: active ? "none" : "1px solid rgba(0,0,0,0.12)",
     background: active ? "#ef4444" : "transparent",
     color: active ? "white" : "#111",
-    fontWeight: 700,
     cursor: "pointer",
     minWidth: 80,
     textAlign: "center",
@@ -103,6 +101,7 @@ export default function Home() {
           className={color}
         >
         <CardHeader style={{ fontSize: "clamp(18px, 3.5vw, 28px)", fontWeight: 700, textAlign: "center" }}>{title}</CardHeader>
+        <Separator />
         <CardContent>
           <div style={{ color: "#333", lineHeight: 1.8 }}>
             {options.map((option, idx) => (
@@ -143,7 +142,7 @@ export default function Home() {
 
       <div style={bottomBar}>
         {(["en", "ms", "ta", "zh"] as const).map((l) => (
-          <button
+          <Button
             key={l}
             onClick={() => setLang(l)}
             style={langButton(lang === l)}
@@ -151,7 +150,7 @@ export default function Home() {
             title={langLabels[l]}
           >
             {langLabels[l]}
-          </button>
+          </Button>
         ))}
       </div>
     </div>
