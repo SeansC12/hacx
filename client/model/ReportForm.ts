@@ -252,6 +252,27 @@ export const exampleIncidentReport: ReportForm = {
           }
         }
       ]
+    },
+    {
+      name: 'Acknowledgment',
+      description: 'Please acknowledge the following',
+      items: [
+        {
+          itemType: 'text',
+          level: 'body',
+          content:
+            'I hereby declare that the information provided is true and accurate to the best of my knowledge. I understand that providing false information may have legal consequences.'
+        },
+        {
+          itemType: 'input',
+          formInput: {
+            id: 'acknowledgment_signature',
+            name: 'Signature',
+            description: 'Please sign your name to acknowledge',
+            input: { type: 'short_text' }
+          }
+        },
+      ]
     }
   ]
 };

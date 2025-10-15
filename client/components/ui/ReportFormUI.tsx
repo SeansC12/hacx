@@ -45,8 +45,8 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
   const [direction, setDirection] = useState<'up' | 'down'>('down');
   const [isAnimating, setIsAnimating] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [showTopFade, setShowTopFade] = useState(false);
-  const [showBottomFade, setShowBottomFade] = useState(false);
+  const [topFadeAmount, setTopFadeAmount] = useState(0);
+  const [bottomFadeAmount, setBottomFadeAmount] = useState(0);
 
   const updateFormData = (id: string, value: any) => {
     setFormData(prev => ({ ...prev, [id]: value }));
@@ -55,8 +55,8 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
   const checkScroll = () => {
     const el = scrollContainerRef.current;
     if (el) {
-      setShowTopFade(el.scrollTop > 0);
-      setShowBottomFade(el.scrollTop < el.scrollHeight - el.clientHeight - 1);
+      setTopFadeAmount(el.scrollTop);
+      setBottomFadeAmount(el.scrollHeight - el.clientHeight - el.scrollTop);
     }
   };
 
@@ -286,10 +286,10 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
   const maxVisibleSection = currentSection;
 
   return (
-    <div style={{ width: '70%', display: 'flex', height: '100vh', overflow: 'hidden' }}>
+    <div style={{ width: '80%', display: 'flex', overflow: 'hidden' }}>
       {/* Left sidebar */}
-      <div style={{ width: '33%', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-        <div style={{ textAlign: 'right' }}>
+      <div style={{ width: '20%', maxWidth: '25%', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+        <div style={{ textAlign: 'right', width: '100%' }}>
           {form.sections.slice(0, maxVisibleSection + 1).map((sec, idx) => (
             <div
               key={idx}
@@ -300,7 +300,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
                 cursor: 'pointer',
                 fontWeight: idx === currentSection ? 'bold' : 'normal',
                 color: idx === currentSection ? '#3b82f6' : '#374151',
-                borderRight: idx === currentSection ? '3px solid #3b82f6' : 'none'
+                borderRight: idx === currentSection ? '3px solid #3b82f6' : '3px solid transparent'
               }}
             >
               {sec.name}
@@ -310,49 +310,26 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
       </div>
 
       {/* Main form area */}
-      <div style={{ width: '66%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem', position: 'relative' }}>
-        {/* Previous button */}
-        {currentSection > 0 && (
-          <Button
-            onClick={() => goToSection(currentSection - 1)}
-            style={{ marginBottom: '1rem', alignSelf: 'flex-start' }}
-            disabled={isAnimating}
-          >
-            Previous
-          </Button>
-        )}
-
+      <div style={{ width: '60%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem', paddingTop: '0', position: 'relative' }}>
         {/* Scroll container with fade effects */}
-        <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', justifyContent: 'center' }}>
-          {showTopFade && (
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '40px',
-              background: 'linear-gradient(to bottom, white, transparent)',
-              pointerEvents: 'none',
-              zIndex: 10
-            }} />
-          )}
-          
-          {showTopFade && (
-            <Button
-              onClick={() => scrollBy(-100)}
-              style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 20 }}
-              size="sm"
-            >
-              <ChevronUp size={16} />
-            </Button>
-          )}
+        <div style={{ position: 'relative', width: '100%', maxHeight: '70vh', flex: 1, display: 'flex', justifyContent: 'center', overflow: 'visible' }}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '100px',
+            background: `linear-gradient(to bottom, rgba(255, 255, 255, ${255 * topFadeAmount/200}), transparent)`,
+            pointerEvents: 'none',
+            zIndex: 10
+          }} />
 
           <div
             ref={scrollContainerRef}
             style={{
               width: '100%',
               height: '100%',
-              overflowY: 'auto',
+              overflowY: 'scroll',
               display: 'flex',
               justifyContent: 'center',
               position: 'relative'
@@ -360,10 +337,12 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
           >
             <div
               style={{
-                animation: isAnimating ? `slide${direction === 'down' ? 'Up' : 'Down'}Out 0.3s ease-out` : `slide${direction === 'down' ? 'Down' : 'Up'}In 0.3s ease-out`,
+                animation: isAnimating ? `slide${direction === 'up' ? 'Up' : 'Down'}Out 0.5s ease-out` : `slide${direction === 'down' ? 'Down' : 'Up'}In 0.5s ease-out`,
                 width: '100%',
                 display: 'flex',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                paddingTop: '2rem',
+                paddingBottom: '50rem'
               }}
             >
               <FieldSet style={{ width: '80%' }}>
@@ -376,59 +355,88 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             </div>
           </div>
 
-          {showBottomFade && (
-            <div style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '40px',
-              background: 'linear-gradient(to top, white, transparent)',
-              pointerEvents: 'none',
-              zIndex: 10
-            }} />
-          )}
-
-          {showBottomFade && (
-            <Button
-              onClick={() => scrollBy(100)}
-              style={{ position: 'absolute', bottom: '10px', right: '10px', zIndex: 20 }}
-              size="sm"
-            >
-              <ChevronDown size={16} />
-            </Button>
-          )}
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '100px',
+            background: `linear-gradient(to bottom, transparent, rgba(255, 255, 255, ${255 * bottomFadeAmount/200}))`,
+            pointerEvents: 'none',
+            zIndex: 10
+          }} />
         </div>
 
-        {/* Next button */}
-        {isComplete && currentSection < form.sections.length - 1 && (
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+          {/* Previous button */}
+          <Button
+            onClick={() => goToSection(currentSection - 1)}
+            style={{ alignSelf: 'flex-start', opacity: currentSection <= 0 ? 0.5 : 1 }}
+            size='lg'
+            disabled={isAnimating || currentSection <= 0}
+          >
+            Previous
+          </Button>
+
+          <div style={{ flex: 1 }} /> {/* spacer, for when one of the two buttons is missing */}
+
+          {/* Next button */}
           <Button
             onClick={() => goToSection(currentSection + 1)}
-            style={{ marginTop: '1rem', alignSelf: 'flex-end' }}
-            disabled={isAnimating}
+            style={{ alignSelf: 'flex-end', opacity: (!isComplete || currentSection >= form.sections.length - 1) ? 0.5 : 1 }}
+            size='lg'
+            disabled={isAnimating || !isComplete || currentSection >= form.sections.length - 1}
+            className='bg-blue-600 hover:bg-blue-700 text-white'
           >
             Next
           </Button>
-        )}
+        </div>
 
         <style>{`
           @keyframes slideDownOut {
             from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(-100vh); opacity: 0; }
           }
           @keyframes slideUpOut {
             from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(100vh); opacity: 0; }
           }
           @keyframes slideDownIn {
-            from { transform: translateY(20px); opacity: 0; }
+            from { transform: translateY(100vh); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
           }
           @keyframes slideUpIn {
-            from { transform: translateY(-20px); opacity: 0; }
+            from { transform: translateY(-100vh); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
           }
         `}</style>
+      </div>
+
+      {/* Right spacer */}
+      <div style={{ width: '20%', padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' }}>
+        <Button
+          onClick={() => scrollBy(-100)}
+          style={{ 
+            position: 'absolute', top: '10px', left: '0px', zIndex: 20,
+            opacity: topFadeAmount > 0 ? 1 : 0.5
+          }}
+          size="sm"
+          disabled={topFadeAmount <= 0}
+        >
+          <ChevronUp size={16} />
+        </Button>
+
+        <Button
+          onClick={() => scrollBy(100)}
+          style={{ 
+            position: 'absolute', top: '70px', left: '0px', zIndex: 20,
+            opacity: bottomFadeAmount > 0 ? 1 : 0.5
+          }}
+          size="sm"
+          disabled={bottomFadeAmount <= 0}
+        >
+          <ChevronDown size={16} />
+        </Button>
       </div>
     </div>
   );
