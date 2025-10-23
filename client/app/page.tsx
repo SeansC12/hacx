@@ -21,13 +21,6 @@ export default function Home() {
     zh: "Mandarin",
   };
 
-  const headerStyle: React.CSSProperties = {
-    fontSize: "clamp(28px, 6vw, 56px)",
-    fontWeight: 800,
-    textAlign: "center",
-    margin: 0,
-  };
-
   const buttonsWrap: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",

@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { ChevronUp, ChevronDown, FileText, Mail, Usb } from "lucide-react";
+import { FileText, Mail, Usb } from "lucide-react";
 import {
   Field,
   FieldDescription,
@@ -43,10 +43,6 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
       return () => el.removeEventListener("scroll", checkScroll);
     }
   }, [currentSection]);
-
-  const scrollBy = (amount: number) => {
-    scrollContainerRef.current?.scrollBy({ top: amount, behavior: "smooth" });
-  };
 
   const getAllInputIds = (items: FormItem[]): string[] => {
     const ids: string[] = [];
@@ -422,31 +418,6 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             animation: slide-up-in 0.5s ease-out;
           }
         `}</style>
-      </div>
-
-      {/* Right spacer with scroll buttons */}
-      <div className="w-1/5 p-4 flex flex-col items-start relative">
-        <Button
-          onClick={() => scrollBy(-100)}
-          className={`absolute top-2 left-0 z-20 ${
-            topFadeAmount > 0 ? "opacity-100" : "opacity-50"
-          }`}
-          size="sm"
-          disabled={topFadeAmount <= 0}
-        >
-          <ChevronUp size={16} />
-        </Button>
-
-        <Button
-          onClick={() => scrollBy(100)}
-          className={`absolute top-16 left-0 z-20 ${
-            bottomFadeAmount > 0 ? "opacity-100" : "opacity-50"
-          }`}
-          size="sm"
-          disabled={bottomFadeAmount <= 0}
-        >
-          <ChevronDown size={16} />
-        </Button>
       </div>
     </div>
   );
