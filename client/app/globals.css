@@ -44,7 +44,12 @@
 }
 
 /* block scrolling */
-html, body {margin: 0; height: 100%; overflow: hidden}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
 :root {
   --radius: 0.625rem;
