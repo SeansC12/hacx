@@ -2,80 +2,28 @@ import React, { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 import { ChevronUp, ChevronDown, FileText, Mail, Usb } from "lucide-react";
 import {
   Field,
-  FieldContent,
   FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
   FieldLegend,
-  FieldSeparator,
   FieldSet,
-  FieldTitle,
 } from "@/components/ui/field";
-
-// Types from the previous artifact
-type ShortTextInput = { type: "short_text" };
-type LongTextInput = { type: "long_text" };
-type FileUploadInput = { type: "file_upload" };
-type DateTimeInput = {
-  type: "date_time";
-  options: { includeDate: boolean; includeTime: boolean };
-};
-type DropdownSelectorInput = {
-  type: "dropdown";
-  options: string[];
-  allowOther: boolean;
-};
-type GridSelectorInput = { type: "grid"; options: string[] };
-type AddressInput = { type: "address" };
-
-type FormInputType =
-  | ShortTextInput
-  | LongTextInput
-  | FileUploadInput
-  | DateTimeInput
-  | DropdownSelectorInput
-  | GridSelectorInput
-  | AddressInput;
-
-type FormInput = {
-  id: string;
-  name: string;
-  description?: string;
-  input: FormInputType;
-};
-
-type ImageItem = { itemType: "image"; src: string; alt?: string };
-type TextItem = {
-  itemType: "text";
-  level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body";
-  content: string;
-};
-type FormInputItem = { itemType: "input"; formInput: FormInput };
-type CombinedItem = { itemType: "combined"; items: FormItem[] };
-
-type FormItem = ImageItem | TextItem | FormInputItem | CombinedItem;
-type FormSection = { name: string; description?: string; items: FormItem[] };
-type ReportForm = {
-  name: string;
-  description: string;
-  sections: FormSection[];
-};
 
 // Main component
 export default function ReportFormUI({ form }: { form: ReportForm }) {
   const [currentSection, setCurrentSection] = useState(0);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<Record<string, string>>({});
   const [direction, setDirection] = useState<"up" | "down">("down");
   const [isAnimating, setIsAnimating] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [topFadeAmount, setTopFadeAmount] = useState(0);
   const [bottomFadeAmount, setBottomFadeAmount] = useState(0);
 
-  const updateFormData = (id: string, value: any) => {
+  const updateFormData = (id: string, value: string) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
@@ -165,7 +113,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             id={id}
             value={formData[id] || ""}
             onChange={(e) => updateFormData(id, e.target.value)}
-            style={{ width: "100%" }}
+            className="w-full"
           />
         );
         break;
@@ -177,15 +125,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             value={formData[id] || ""}
             onChange={(e) => updateFormData(id, e.target.value)}
             rows={3}
-            style={{
-              width: "100%",
-              padding: "0.5rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.375rem",
-              resize: "vertical",
-              fontFamily: "inherit",
-              fontSize: "inherit",
-            }}
+            className="w-full p-2 border border-gray-300 rounded-md resize-y font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         );
         break;
@@ -197,36 +137,26 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             value={formData[id] || ""}
             onChange={(e) => updateFormData(id, e.target.value)}
             placeholder="Address"
-            style={{ width: "100%" }}
+            className="w-full"
           />
         );
         break;
 
       case "grid":
         inputElement = (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "20px",
-            }}
-          >
+          <div className="grid grid-cols-3 gap-5">
             {input.options.map((option) => (
               <Card
                 key={option}
                 onClick={() => updateFormData(id, option)}
-                style={{
-                  cursor: "pointer",
-                  border:
-                    formData[id] === option
-                      ? "2px solid #3b82f6"
-                      : "1px solid #e5e7eb",
-                  backgroundColor:
-                    formData[id] === option ? "#eff6ff" : "white",
-                }}
+                className={`cursor-pointer transition-colors ${
+                  formData[id] === option
+                    ? "border-2 border-blue-500 bg-blue-50"
+                    : "border border-gray-200 bg-white hover:bg-gray-50"
+                }`}
               >
                 <CardHeader>
-                  <CardTitle style={{ fontSize: "1rem" }}>{option}</CardTitle>
+                  <CardTitle className="text-base">{option}</CardTitle>
                 </CardHeader>
               </Card>
             ))}
@@ -236,13 +166,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
       case "file_upload":
         inputElement = (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "20px",
-            }}
-          >
+          <div className="grid grid-cols-3 gap-5">
             {[
               { label: "Scan File", icon: FileText },
               { label: "Email File", icon: Mail },
@@ -251,25 +175,15 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
               <Card
                 key={label}
                 onClick={() => updateFormData(id, label)}
-                style={{
-                  cursor: "pointer",
-                  border:
-                    formData[id] === label
-                      ? "2px solid #3b82f6"
-                      : "1px solid #e5e7eb",
-                  backgroundColor: formData[id] === label ? "#eff6ff" : "white",
-                }}
+                className={`cursor-pointer transition-colors ${
+                  formData[id] === label
+                    ? "border-2 border-blue-500 bg-blue-50"
+                    : "border border-gray-200 bg-white hover:bg-gray-50"
+                }`}
               >
-                <CardHeader
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
-                >
+                <CardHeader className="flex flex-col items-center gap-2">
                   <Icon size={24} />
-                  <CardTitle style={{ fontSize: "1rem" }}>{label}</CardTitle>
+                  <CardTitle className="text-base">{label}</CardTitle>
                 </CardHeader>
               </Card>
             ))}
@@ -285,7 +199,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             value={formData[id] || ""}
             onChange={(e) => updateFormData(id, e.target.value)}
             placeholder="Date/Time (TODO)"
-            style={{ width: "100%" }}
+            className="w-full"
           />
         );
         break;
@@ -298,7 +212,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             value={formData[id] || ""}
             onChange={(e) => updateFormData(id, e.target.value)}
             placeholder="Select... (TODO)"
-            style={{ width: "100%" }}
+            className="w-full"
           />
         );
         break;
@@ -321,11 +235,11 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
       case "image":
         return (
-          <img
+          <Image
             key={index}
             src={item.src}
-            alt={item.alt}
-            style={{ maxWidth: "100%" }}
+            alt={item.alt ?? ""}
+            className="max-w-full"
           />
         );
 
@@ -334,12 +248,9 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
       case "combined":
         return (
-          <div
-            key={index}
-            style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}
-          >
+          <div key={index} className="flex gap-4 items-start">
             {item.items.map((subItem, subIndex) => (
-              <div key={subIndex} style={{ flex: 1 }}>
+              <div key={subIndex} className="flex-1">
                 {renderItem(subItem, subIndex)}
               </div>
             ))}
@@ -353,34 +264,19 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
   const maxVisibleSection = currentSection;
 
   return (
-    <div style={{ width: "80%", display: "flex", overflow: "hidden" }}>
+    <div className="w-4/5 flex overflow-hidden">
       {/* Left sidebar */}
-      <div
-        style={{
-          width: "20%",
-          maxWidth: "25%",
-          padding: "2rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-        }}
-      >
-        <div style={{ textAlign: "right", width: "100%" }}>
+      <div className="w-1/5 max-w-[25%] p-8 flex flex-col items-end">
+        <div className="text-right w-full">
           {form.sections.slice(0, maxVisibleSection + 1).map((sec, idx) => (
             <div
               key={idx}
               onClick={() => goToSection(idx)}
-              style={{
-                padding: "0.5rem 1rem",
-                marginBottom: "0.5rem",
-                cursor: "pointer",
-                fontWeight: idx === currentSection ? "bold" : "normal",
-                color: idx === currentSection ? "#3b82f6" : "#374151",
-                borderRight:
-                  idx === currentSection
-                    ? "3px solid #3b82f6"
-                    : "3px solid transparent",
-              }}
+              className={`px-4 py-2 mb-2 cursor-pointer border-r-4 transition-all ${
+                idx === currentSection
+                  ? "font-bold text-blue-600 border-blue-600"
+                  : "font-normal text-gray-700 border-transparent hover:text-blue-500"
+              }`}
             >
               {sec.name}
             </div>
@@ -389,66 +285,36 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
       </div>
 
       {/* Main form area */}
-      <div
-        style={{
-          width: "60%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: "2rem",
-          paddingTop: "0",
-          position: "relative",
-        }}
-      >
+      <div className="w-3/5 flex flex-col items-center p-8 pt-0 relative">
         {/* Scroll container with fade effects */}
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            maxHeight: "70vh",
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            overflow: "visible",
-          }}
-        >
+        <div className="relative w-full max-h-[70vh] flex-1 flex justify-center overflow-visible">
+          {/* Top fade overlay */}
           <div
+            className="absolute top-0 left-0 right-0 h-24 pointer-events-none z-10"
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: "100px",
-              background: `linear-gradient(to bottom, rgba(255, 255, 255, ${(255 * topFadeAmount) / 200}), transparent)`,
-              pointerEvents: "none",
-              zIndex: 10,
+              background: `linear-gradient(to bottom, rgba(255, 255, 255, ${Math.min(
+                topFadeAmount / 200,
+                1,
+              )}), transparent)`,
             }}
           />
 
           <div
             ref={scrollContainerRef}
-            style={{
-              width: "100%",
-              height: "100%",
-              overflowY: "scroll",
-              display: "flex",
-              justifyContent: "center",
-              position: "relative",
-            }}
+            className="w-full h-full overflow-y-scroll flex justify-center relative"
           >
             <div
-              style={{
-                animation: isAnimating
-                  ? `slide${direction === "up" ? "Up" : "Down"}Out 0.5s ease-out`
-                  : `slide${direction === "down" ? "Down" : "Up"}In 0.5s ease-out`,
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "2rem",
-                paddingBottom: "50rem",
-              }}
+              className={`w-full flex justify-center pt-8 pb-[50rem] ${
+                isAnimating
+                  ? direction === "up"
+                    ? "animate-slide-up-out"
+                    : "animate-slide-down-out"
+                  : direction === "down"
+                    ? "animate-slide-down-in"
+                    : "animate-slide-up-in"
+              }`}
             >
-              <FieldSet style={{ width: "80%" }}>
+              <FieldSet className="w-4/5">
                 <FieldLegend>{section.name}</FieldLegend>
                 <FieldDescription>{section.description}</FieldDescription>
                 <FieldGroup>
@@ -458,104 +324,113 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
             </div>
           </div>
 
+          {/* Bottom fade overlay */}
           <div
+            className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "100px",
-              background: `linear-gradient(to bottom, transparent, rgba(255, 255, 255, ${(255 * bottomFadeAmount) / 200}))`,
-              pointerEvents: "none",
-              zIndex: 10,
+              background: `linear-gradient(to bottom, transparent, rgba(255, 255, 255, ${Math.min(
+                bottomFadeAmount / 200,
+                1,
+              )}))`,
             }}
           />
         </div>
 
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "1rem",
-          }}
-        >
-          {/* Previous button */}
+        {/* Navigation buttons */}
+        <div className="w-full flex justify-between mt-4">
           <Button
             onClick={() => goToSection(currentSection - 1)}
-            style={{
-              alignSelf: "flex-start",
-              opacity: currentSection <= 0 ? 0.5 : 1,
-            }}
+            className={`self-start ${
+              currentSection <= 0 ? "opacity-50" : "opacity-100"
+            }`}
             size="lg"
             disabled={isAnimating || currentSection <= 0}
           >
             Previous
           </Button>
-          <div style={{ flex: 1 }} />{" "}
-          {/* spacer, for when one of the two buttons is missing */}
-          {/* Next button */}
+          <div className="flex-1" />
           <Button
             onClick={() => goToSection(currentSection + 1)}
-            style={{
-              alignSelf: "flex-end",
-              opacity:
-                !isComplete || currentSection >= form.sections.length - 1
-                  ? 0.5
-                  : 1,
-            }}
+            className={`self-end bg-blue-600 hover:bg-blue-700 text-white ${
+              !isComplete || currentSection >= form.sections.length - 1
+                ? "opacity-50"
+                : "opacity-100"
+            }`}
             size="lg"
             disabled={
               isAnimating ||
               !isComplete ||
               currentSection >= form.sections.length - 1
             }
-            className="bg-blue-600 hover:bg-blue-700 text-white"
           >
             Next
           </Button>
         </div>
 
-        <style>{`
-          @keyframes slideDownOut {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-100vh); opacity: 0; }
+        {/* CSS animations */}
+        <style jsx>{`
+          @keyframes slide-down-out {
+            from {
+              transform: translateY(0);
+              opacity: 1;
+            }
+            to {
+              transform: translateY(-100vh);
+              opacity: 0;
+            }
           }
-          @keyframes slideUpOut {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(100vh); opacity: 0; }
+          @keyframes slide-up-out {
+            from {
+              transform: translateY(0);
+              opacity: 1;
+            }
+            to {
+              transform: translateY(100vh);
+              opacity: 0;
+            }
           }
-          @keyframes slideDownIn {
-            from { transform: translateY(100vh); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+          @keyframes slide-down-in {
+            from {
+              transform: translateY(100vh);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
           }
-          @keyframes slideUpIn {
-            from { transform: translateY(-100vh); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+          @keyframes slide-up-in {
+            from {
+              transform: translateY(-100vh);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
+          }
+          .animate-slide-down-out {
+            animation: slide-down-out 0.5s ease-out;
+          }
+          .animate-slide-up-out {
+            animation: slide-up-out 0.5s ease-out;
+          }
+          .animate-slide-down-in {
+            animation: slide-down-in 0.5s ease-out;
+          }
+          .animate-slide-up-in {
+            animation: slide-up-in 0.5s ease-out;
           }
         `}</style>
       </div>
 
-      {/* Right spacer */}
-      <div
-        style={{
-          width: "20%",
-          padding: "1rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          position: "relative",
-        }}
-      >
+      {/* Right spacer with scroll buttons */}
+      <div className="w-1/5 p-4 flex flex-col items-start relative">
         <Button
           onClick={() => scrollBy(-100)}
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "0px",
-            zIndex: 20,
-            opacity: topFadeAmount > 0 ? 1 : 0.5,
-          }}
+          className={`absolute top-2 left-0 z-20 ${
+            topFadeAmount > 0 ? "opacity-100" : "opacity-50"
+          }`}
           size="sm"
           disabled={topFadeAmount <= 0}
         >
@@ -564,13 +439,9 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
         <Button
           onClick={() => scrollBy(100)}
-          style={{
-            position: "absolute",
-            top: "70px",
-            left: "0px",
-            zIndex: 20,
-            opacity: bottomFadeAmount > 0 ? 1 : 0.5,
-          }}
+          className={`absolute top-16 left-0 z-20 ${
+            bottomFadeAmount > 0 ? "opacity-100" : "opacity-50"
+          }`}
           size="sm"
           disabled={bottomFadeAmount <= 0}
         >

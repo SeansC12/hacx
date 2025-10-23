@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomContentContainer } from "@/components/PageContainer";
+import { BottomContentContainer } from "@/components/page-container";
 import SpeakIndicator from "@/components/ui/SpeakIndicator";
 import {
   Breadcrumb,

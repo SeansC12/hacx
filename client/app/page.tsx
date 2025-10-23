@@ -6,18 +6,10 @@ import {
   PageContainer,
   MainContentContainer,
   BottomContentContainer,
-} from "@/components/PageContainer";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+} from "@/components/page-container";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import SpeakIndicator from "@/components/ui/SpeakIndicator";
-import HeaderText from "@/components/HeaderText";
+import HeaderText from "@/components/header-text";
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ms" | "ta" | "zh">("en");
