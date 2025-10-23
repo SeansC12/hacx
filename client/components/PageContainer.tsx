@@ -13,14 +13,14 @@ export function PageContainer({ children }: { children: React.ReactNode }) {
     color: "#111",
   };
 
-  return (
-    <div style={container}>
-      {children}
-    </div>
-  )
+  return <div style={container}>{children}</div>;
 }
 
-export function MainContentContainer({ children }: { children: React.ReactNode }) {
+export function MainContentContainer({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const centerArea: React.CSSProperties = {
     flex: 1,
     display: "flex",
@@ -31,14 +31,14 @@ export function MainContentContainer({ children }: { children: React.ReactNode }
     width: "100%",
   };
 
-  return (
-    <div style={centerArea}>
-      {children}
-    </div>
-  )
+  return <div style={centerArea}>{children}</div>;
 }
 
-export function TopContentContainer({ children }: { children: React.ReactNode }) {
+export function TopContentContainer({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const topArea: React.CSSProperties = {
     width: "100%",
     display: "flex",
@@ -46,17 +46,17 @@ export function TopContentContainer({ children }: { children: React.ReactNode })
     justifyContent: "center",
     alignItems: "center",
     gap: "20px",
-    padding: "12px"
+    padding: "12px",
   };
-  
-  return (
-    <div style={topArea}>
-      {children}
-    </div>
-  )
+
+  return <div style={topArea}>{children}</div>;
 }
 
-export function BottomContentContainer({ children }: { children: React.ReactNode }) {
+export function BottomContentContainer({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const bottomArea: React.CSSProperties = {
     width: "100%",
     display: "flex",
@@ -64,12 +64,8 @@ export function BottomContentContainer({ children }: { children: React.ReactNode
     justifyContent: "center",
     alignItems: "center",
     gap: "20px",
-    padding: "12px"
+    padding: "12px",
   };
 
-  return (
-    <div style={bottomArea}>
-      {children}
-    </div>
-  )
+  return <div style={bottomArea}>{children}</div>;
 }

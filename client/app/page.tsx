@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { PageContainer, MainContentContainer, BottomContentContainer } from "@/components/ui/PageContainer";
+import {
+  PageContainer,
+  MainContentContainer,
+  BottomContentContainer,
+} from "@/components/PageContainer";
 import {
   Card,
   CardAction,
@@ -11,9 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import SpeakIndicator from "@/components/ui/SpeakIndicator";
-import HeaderText from "@/components/ui/HeaderText";
+import HeaderText from "@/components/HeaderText";
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ms" | "ta" | "zh">("en");
@@ -51,24 +55,49 @@ export default function Home() {
     textAlign: "center",
   });
 
-  function ButtonCard(title: string, options: Array<string>, color: string, action: () => void) {
+  function ButtonCard(
+    title: string,
+    options: Array<string>,
+    color: string,
+    action: () => void,
+  ) {
     return (
       <button style={{ flex: 1, width: "100%" }} onClick={action}>
-        <Card
-          style={{ cursor: "pointer" }}
-          className={color}
-        >
-        <CardHeader style={{ fontSize: "clamp(18px, 3.5vw, 28px)", fontWeight: 700, textAlign: "center" }}>{title}</CardHeader>
-        <CardContent>
-          <div style={{ color: "#333", lineHeight: 1.8, alignItems: "left", textAlign: "left" }}>
-            {options.map((option, idx) => (
-              <div key={idx} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "20px" }}>
-                {option}
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        <Card style={{ cursor: "pointer" }} className={color}>
+          <CardHeader
+            style={{
+              fontSize: "clamp(18px, 3.5vw, 28px)",
+              fontWeight: 700,
+              textAlign: "center",
+            }}
+          >
+            {title}
+          </CardHeader>
+          <CardContent>
+            <div
+              style={{
+                color: "#333",
+                lineHeight: 1.8,
+                alignItems: "left",
+                textAlign: "left",
+              }}
+            >
+              {options.map((option, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontSize: "20px",
+                  }}
+                >
+                  {option}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </button>
     );
   }
@@ -80,23 +109,31 @@ export default function Home() {
 
         <div style={buttonsWrap}>
           {ButtonCard(
-            "Report an Incident", 
-            ["🚦 Traffic Offence", "🧾 Theft", "⚠️ Scam"], "bg-red-200", 
+            "Report an Incident",
+            ["🚦 Traffic Offence", "🧾 Theft", "⚠️ Scam"],
+            "bg-red-200",
             () => {
-              console.log("Reporting an Incident")
+              console.log("Reporting an Incident");
               // redirect to /incident
               window.location.href = "http://localhost:3000/incident";
-            }
+            },
           )}
           {ButtonCard(
-            "Report a Lost Item", 
-            ["🎒 Bags", "📱 Electronics", "💎 Valuables"], "bg-green-200", 
-            () => console.log("Report a Lost Item")
+            "Report a Lost Item",
+            ["🎒 Bags", "📱 Electronics", "💎 Valuables"],
+            "bg-green-200",
+            () => console.log("Report a Lost Item"),
           )}
           {ButtonCard(
-            "⚠️\nEmergency", 
-            ["🚑 Injured Persons", "🔍 Missing Persons", "🏥 Medical Emergency", "👮‍♂️ Contact an Officer"], "bg-purple-200", 
-            () => console.log("Report an Emergency")
+            "⚠️\nEmergency",
+            [
+              "🚑 Injured Persons",
+              "🔍 Missing Persons",
+              "🏥 Medical Emergency",
+              "👮‍♂️ Contact an Officer",
+            ],
+            "bg-purple-200",
+            () => console.log("Report an Emergency"),
           )}
         </div>
 
@@ -104,7 +141,15 @@ export default function Home() {
       </MainContentContainer>
 
       <BottomContentContainer>
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", gap: "12px", padding: "12px" }}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            gap: "12px",
+            padding: "12px",
+          }}
+        >
           {(["en", "ms", "ta", "zh"] as const).map((l) => (
             <Button
               key={l}
@@ -113,7 +158,8 @@ export default function Home() {
               aria-pressed={lang === l}
               title={langLabels[l]}
             >
-              {langLabels[l]}<br />
+              {langLabels[l]}
+              <br />
             </Button>
           ))}
         </div>

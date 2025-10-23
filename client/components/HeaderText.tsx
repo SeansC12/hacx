@@ -1,6 +1,10 @@
 "use client";
 
-export default function HeaderText({ children }: { children: React.ReactNode }) {
+export default function HeaderText({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const headerStyle: React.CSSProperties = {
     fontSize: "clamp(28px, 6vw, 56px)",
     fontWeight: 800,
