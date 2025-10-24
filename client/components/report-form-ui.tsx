@@ -206,38 +206,49 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
         break;
 
       case "date_time":
-        const [open, setOpen] = React.useState(false)
+        const [dateOpen, setDateOpen] = React.useState(false);
 
         inputElement = (
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                id="date"
-                className="w-48 justify-between font-normal"
-              >
-                {formData[id] ? formData[id] : "Select date"}
-                <ChevronDownIcon />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={formData[id] ? new Date(formData[id]) : undefined}
-                captionLayout="dropdown"
-                onSelect={(date) => {
-                  console.log("Selected date:", date);
-                  const options: Intl.DateTimeFormatOptions = {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  };
-                  updateFormData(id, (date?.toLocaleDateString("en-SG", options) || ""));
-                  setOpen(false);
-                }}
+          <div className="flex gap-4 items-start">
+            {input.options.includeDate && (<Popover open={dateOpen} onOpenChange={setDateOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  id="date"
+                  className="w-48 justify-between font-normal"
+                >
+                  {formData[id] ? formData[id] : "Select date"}
+                  <ChevronDownIcon />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={formData[id] ? new Date(formData[id]) : undefined}
+                  captionLayout="dropdown"
+                  onSelect={(date) => {
+                    console.log("Selected date:", date);
+                    const options: Intl.DateTimeFormatOptions = {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    };
+                    updateFormData(id, (date?.toLocaleDateString("en-SG", options) || ""));
+                    setDateOpen(false);
+                  }}
+                />
+              </PopoverContent>
+            </Popover>)}
+            {input.options.includeTime && (
+              <Input
+                type="time"
+                id="time-picker"
+                step="1"
+                defaultValue="10:30:00"
+                className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               />
-            </PopoverContent>
-          </Popover>
+            )}
+          </div>
         );
         break;
 
