@@ -21,6 +21,15 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
+import { ChevronDownIcon } from "lucide-react"
+import { Calendar } from "@/components/ui/calendar"
+import { Label } from "@/components/ui/label"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
 
 // Main component
 export default function ReportFormUI({ form }: { form: ReportForm }) {
@@ -197,20 +206,42 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
         break;
 
       case "date_time":
-        // TODO: Implement DateTimeInput
+        const [open, setOpen] = React.useState(false)
+
         inputElement = (
-          <Input
-            id={id}
-            value={formData[id] || ""}
-            onChange={(e) => updateFormData(id, e.target.value)}
-            placeholder="Date/Time (TODO)"
-            className="w-full"
-          />
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                id="date"
+                className="w-48 justify-between font-normal"
+              >
+                {formData[id] ? formData[id] : "Select date"}
+                <ChevronDownIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={formData[id] ? new Date(formData[id]) : undefined}
+                captionLayout="dropdown"
+                onSelect={(date) => {
+                  console.log("Selected date:", date);
+                  const options: Intl.DateTimeFormatOptions = {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  };
+                  updateFormData(id, (date?.toLocaleDateString("en-SG", options) || ""));
+                  setOpen(false);
+                }}
+              />
+            </PopoverContent>
+          </Popover>
         );
         break;
 
       case "dropdown":
-        // TODO: Implement DropdownSelectorInput
         inputElement = (
           <Select value={formData[id] || ""} onValueChange={(value) => updateFormData(id, value)}>
             <SelectTrigger className="w-[180px]">
@@ -229,22 +260,6 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
               </SelectGroup>
             </SelectContent>
           </Select>
-          // <Select
-          //   id={id}
-          //   value={formData[id] || ""}
-          //   onChange={(value) => updateFormData(id, value)}
-          // >
-          //   <SelectTrigger className="w-full">
-          //     <SelectValue placeholder="Select... (TODO)" />
-          //   </SelectTrigger>
-          //   <SelectContent>
-          //     {input.options.map((option) => (
-          //       <SelectItem key={option} value={option}>
-          //         {option}
-          //       </SelectItem>
-          //     ))}
-          //   </SelectContent>
-          // </Select>
         );
         break;
     }

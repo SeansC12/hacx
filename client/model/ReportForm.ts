@@ -116,6 +116,20 @@ export const exampleIncidentReport: ReportForm = {
           },
         },
         {
+          itemType: "input",
+          formInput: {
+            id: "reporting_datetime",
+            name: "Date of Reporting",
+            input: {
+              type: "date_time",
+              options: {
+                includeDate: true,
+                includeTime: true,
+              },
+            },
+          },
+        },
+        {
           itemType: "combined",
           items: [
             {
