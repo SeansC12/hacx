@@ -2,6 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import Image from "next/image";
 import { FileText, Mail, Usb } from "lucide-react";
 import {
@@ -203,13 +212,39 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
       case "dropdown":
         // TODO: Implement DropdownSelectorInput
         inputElement = (
-          <Input
-            id={id}
-            value={formData[id] || ""}
-            onChange={(e) => updateFormData(id, e.target.value)}
-            placeholder="Select... (TODO)"
-            className="w-full"
-          />
+          <Select value={formData[id] || ""} onValueChange={(value) => updateFormData(id, value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select an Option..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {input.options.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+                {
+                  input.allowOther && (<SelectItem value="other">Other</SelectItem>)
+                }
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          // <Select
+          //   id={id}
+          //   value={formData[id] || ""}
+          //   onChange={(value) => updateFormData(id, value)}
+          // >
+          //   <SelectTrigger className="w-full">
+          //     <SelectValue placeholder="Select... (TODO)" />
+          //   </SelectTrigger>
+          //   <SelectContent>
+          //     {input.options.map((option) => (
+          //       <SelectItem key={option} value={option}>
+          //         {option}
+          //       </SelectItem>
+          //     ))}
+          //   </SelectContent>
+          // </Select>
         );
         break;
     }
