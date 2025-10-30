@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import Image from "next/image";
 import { FileText, Mail, Usb } from "lucide-react";
 import {
@@ -21,15 +21,14 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
-import { ChevronDownIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
-import { Label } from "@/components/ui/label"
+import { ChevronDownIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-
+} from "@/components/ui/popover";
 
 // Main component
 export default function ReportFormUI({ form }: { form: ReportForm }) {
@@ -39,6 +38,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
   const [isAnimating, setIsAnimating] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [topFadeAmount, setTopFadeAmount] = useState(0);
+  const [dateOpen, setDateOpen] = React.useState(false);
   const [bottomFadeAmount, setBottomFadeAmount] = useState(0);
 
   const updateFormData = (id: string, value: string) => {
@@ -206,39 +206,45 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
         break;
 
       case "date_time":
-        const [dateOpen, setDateOpen] = React.useState(false);
-
         inputElement = (
           <div className="flex gap-4 items-start">
-            {input.options.includeDate && (<Popover open={dateOpen} onOpenChange={setDateOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  id="date"
-                  className="w-48 justify-between font-normal"
+            {input.options.includeDate && (
+              <Popover open={dateOpen} onOpenChange={setDateOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    id="date"
+                    className="w-48 justify-between font-normal"
+                  >
+                    {formData[id] ? formData[id] : "Select date"}
+                    <ChevronDownIcon />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-auto overflow-hidden p-0"
+                  align="start"
                 >
-                  {formData[id] ? formData[id] : "Select date"}
-                  <ChevronDownIcon />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={formData[id] ? new Date(formData[id]) : undefined}
-                  captionLayout="dropdown"
-                  onSelect={(date) => {
-                    console.log("Selected date:", date);
-                    const options: Intl.DateTimeFormatOptions = {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric'
-                    };
-                    updateFormData(id, (date?.toLocaleDateString("en-SG", options) || ""));
-                    setDateOpen(false);
-                  }}
-                />
-              </PopoverContent>
-            </Popover>)}
+                  <Calendar
+                    mode="single"
+                    selected={formData[id] ? new Date(formData[id]) : undefined}
+                    captionLayout="dropdown"
+                    onSelect={(date) => {
+                      console.log("Selected date:", date);
+                      const options: Intl.DateTimeFormatOptions = {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      };
+                      updateFormData(
+                        id,
+                        date?.toLocaleDateString("en-SG", options) || "",
+                      );
+                      setDateOpen(false);
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            )}
             {input.options.includeTime && (
               <Input
                 type="time"
@@ -254,7 +260,10 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
       case "dropdown":
         inputElement = (
-          <Select value={formData[id] || ""} onValueChange={(value) => updateFormData(id, value)}>
+          <Select
+            value={formData[id] || ""}
+            onValueChange={(value) => updateFormData(id, value)}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select an Option..." />
             </SelectTrigger>
@@ -265,9 +274,9 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
                     {option}
                   </SelectItem>
                 ))}
-                {
-                  input.allowOther && (<SelectItem value="other">Other</SelectItem>)
-                }
+                {input.allowOther && (
+                  <SelectItem value="other">Other</SelectItem>
+                )}
               </SelectGroup>
             </SelectContent>
           </Select>
