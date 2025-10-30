@@ -93,7 +93,7 @@ export default function Home() {
               onClick={() => setLang(l)}
               className={`cursor-pointer min-w-20 text-center ${
                 lang === l
-                  ? "border-none bg-blue-500 text-white"
+                  ? "border-none bg-blue-500 hover:bg-blue-600 text-white"
                   : "border hover:bg-blue-200 border-black/12 bg-transparent text-gray-900"
               }`}
               aria-pressed={lang === l}

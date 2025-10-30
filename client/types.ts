@@ -13,6 +13,7 @@ type DropdownSelectorInput = {
 };
 type GridSelectorInput = { type: "grid"; options: string[] };
 type AddressInput = { type: "address" };
+type SingpassInput = { type: "singpass_button" };
 
 type FormInputType =
   | ShortTextInput
@@ -21,7 +22,8 @@ type FormInputType =
   | DateTimeInput
   | DropdownSelectorInput
   | GridSelectorInput
-  | AddressInput;
+  | AddressInput
+  | SingpassInput;
 
 type FormInput = {
   id: string;

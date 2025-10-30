@@ -6,7 +6,6 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectLabel,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -23,12 +22,12 @@ import {
 } from "@/components/ui/field";
 import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ReportForm, FormItem, FormInput } from "@/model/ReportForm";
 
 // Main component
 export default function ReportFormUI({ form }: { form: ReportForm }) {
@@ -311,6 +310,13 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
 
       case "input":
         return renderInput(item.formInput);
+
+      case "singpass_button":
+        return (
+          <div key={index}>
+            <login-with-singpass-button size="sm" color="white" multiline />
+          </div>
+        );
 
       case "combined":
         return (

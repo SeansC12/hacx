@@ -75,8 +75,17 @@ export type CombinedItem = {
   items: FormItem[];
 };
 
+export type SingPassButtonItem = {
+  itemType: "singpass_button";
+};
+
 // Union type for all form items
-export type FormItem = ImageItem | TextItem | FormInputItem | CombinedItem;
+export type FormItem =
+  | ImageItem
+  | TextItem
+  | FormInputItem
+  | CombinedItem
+  | SingPassButtonItem;
 
 // FormSection contains a collection of form items
 export type FormSection = {
@@ -103,9 +112,7 @@ export const exampleIncidentReport: ReportForm = {
       description: "Please provide your personal information",
       items: [
         {
-          itemType: "text",
-          level: "h3",
-          content: "Fill in with SingPass 📱",
+          itemType: "singpass_button",
         },
         {
           itemType: "input",
