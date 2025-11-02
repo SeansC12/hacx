@@ -54,4 +54,4 @@ function Input_Shadcn({
   );
 }
 
-export { Input };
+export { Input_Shadcn as Input };

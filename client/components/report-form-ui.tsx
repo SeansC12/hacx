@@ -423,7 +423,7 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
           <div className="flex-1" />
           <Button
             onClick={() => goToSection(currentSection + 1)}
-            className={`self-end bg-blue-600 hover:bg-blue-700 text-white ${
+            className={`self-end bg-[#131745] hover:bg-[] text-white ${
               !isComplete || currentSection >= form.sections.length - 1
                 ? "opacity-50"
                 : "opacity-100"
