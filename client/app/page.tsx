@@ -1,18 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import ButtonCard from "@/components/button-card";
+
+import LostItemImage from "@/public/homepage/lost-item.jpg";
+import TrafficMatterImage from "@/public/homepage/traffic-matters.png";
+import LodgeReportImage from "@/public/homepage/lodge-report.webp";
+import Banner from "@/components/banner";
 
 export default function Home() {
-  useEffect(() => {
-    const fetchTest = async () => {
-      const res = await fetch("/api/healthcheck");
-      const text = await res.text();
-      setTestState(text);
-    };
-    fetchTest();
-  }, []);
-
-  const [testState, setTestState] = useState("Loading...");
-
-  return <div>{testState}</div>;
+  return (
+    <div className="flex items-center justify-center flex-col w-full h-full">
+      <Banner />
+      <h1>How may I help you?</h1>
+      <div className="max-w-5xl w-full flex">
+        <ButtonCard
+          title="Traffic Matters"
+          image={TrafficMatterImage}
+          link={"/incident"}
+        />
+        <ButtonCard
+          title="Lost Items"
+          image={LostItemImage}
+          link={"/lost-items"}
+        />
+        <ButtonCard
+          title="Lodge a Report"
+          image={LodgeReportImage}
+          link={"/report"}
+        />
+      </div>
+    </div>
+  );
 }
