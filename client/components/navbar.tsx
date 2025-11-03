@@ -4,7 +4,7 @@ import SpfLogo from "@/public/spf-logo.png";
 export default function NavBar() {
   return (
     // Make Image scale to fit within the navbar height
-    <div className="w-full h-32 px-72 flex items-center">
+    <div className="w-full h-32 px-72 flex items-center shadow-md">
       <Image
         src={SpfLogo}
         alt="SPF Logo"
