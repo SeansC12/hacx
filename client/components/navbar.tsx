@@ -1,13 +1,18 @@
 import Image from "next/image";
-import bannerSvg from "@/public/homepage/brand-isolated.svg";
+import SpfLogo from "@/public/spf-logo.png";
 
 export default function NavBar() {
   return (
-    <div className="w-full bg-gradient-to-r from-blue-primary to-blue-dark flex items-center justify-between px-72">
-      <h1 className="text-7xl text-white font-extrabold ">
-        Woodleigh Neighbourhood Police Post
-      </h1>
-      <Image src={bannerSvg} alt="Woodleigh NPP Logo" />
+    // Make Image scale to fit within the navbar height
+    <div className="w-full h-32 px-72 flex items-center">
+      <Image
+        src={SpfLogo}
+        alt="SPF Logo"
+        className="h-28 w-56 object-contain"
+      />
+      <div className="font-bold text-xl">
+        This is an unmanned kiosk. Learn more.
+      </div>
     </div>
   );
 }

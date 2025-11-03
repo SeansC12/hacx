@@ -9,9 +9,8 @@ import Banner from "@/components/banner";
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center flex-col w-full h-full">
+    <div className="flex items-center justify-center flex-col w-full">
       <Banner />
-      <h1>How may I help you?</h1>
       <div className="max-w-5xl w-full flex">
         <ButtonCard
           title="Traffic Matters"
