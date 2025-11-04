@@ -115,6 +115,8 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
     }, 300);
   };
 
+  const [dateOpen, setDateOpen] = React.useState(false);
+
   const renderInput = (formInput: FormInput) => {
     const { id, name, description, input } = formInput;
 
@@ -206,7 +208,6 @@ export default function ReportFormUI({ form }: { form: ReportForm }) {
         break;
 
       case "date_time":
-        const [dateOpen, setDateOpen] = React.useState(false);
 
         inputElement = (
           <div className="flex gap-4 items-start">
