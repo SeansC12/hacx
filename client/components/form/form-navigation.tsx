@@ -7,11 +7,11 @@ interface FormNavigationProps {
   maxAccessibleSection: number;
 }
 
-export function FormNavigation({ 
-  sections, 
-  currentSection, 
-  onSectionChange, 
-  maxAccessibleSection 
+export function FormNavigation({
+  sections,
+  currentSection,
+  onSectionChange,
+  maxAccessibleSection,
 }: FormNavigationProps) {
   return (
     <nav className="w-64 p-6 border-r">

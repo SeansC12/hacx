@@ -26,13 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${latoFont.className} antialiased w-screen h-screen`}>
+      <body
+        className={`${latoFont.className} antialiased w-screen h-screen flex flex-col`}
+      >
         <header>
           <nav>
             <NavBar />
           </nav>
         </header>
-        {children}
+        <div className="grow">{children}</div>
       </body>
     </html>
   );

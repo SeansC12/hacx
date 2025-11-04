@@ -1,9 +1,9 @@
-export type InputType = 
-  | "text" 
-  | "textarea" 
-  | "select" 
-  | "date" 
-  | "file" 
+export type InputType =
+  | "text"
+  | "textarea"
+  | "select"
+  | "date"
+  | "file"
   | "grid";
 
 export type FormInput = {

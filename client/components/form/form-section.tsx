@@ -10,14 +10,14 @@ interface FormSectionProps {
 
 export function FormSection({ section, values, onChange }: FormSectionProps) {
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">{section.name}</h2>
         {section.description && (
           <p className="text-gray-600">{section.description}</p>
         )}
       </div>
-      
+
       <div className="space-y-6">
         {section.inputs.map((input) => (
           <FormInput
