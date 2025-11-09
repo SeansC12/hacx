@@ -12,6 +12,8 @@ export interface VoiceAssistantConfig {
     temperature: number;
   };
   instructions: string;
+  tools?: any[];
+  onToolCall?: (toolName: string, args: any) => void;
 }
 
 export function useVoiceAssistant(config: VoiceAssistantConfig) {
@@ -43,7 +45,7 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
       await client.connect();
       setIsConnected(true);
 
-      // Setup session
+      // Setup session with tools if provided
       await client.updateSession({
         modalities: ["text", "audio"],
         instructions: config.instructions,
@@ -56,6 +58,7 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
           prefix_padding_ms: 300,
           silence_duration_ms: 500,
         },
+        tools: config.tools || [],
       });
 
       // Setup event listeners
@@ -89,6 +92,19 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
       client.on(ServerEventType.RESPONSE_AUDIO_DONE, () => {
         console.log("Assistant finished speaking");
         setIsSpeaking(false);
+      });
+
+      // Handle function calls
+      client.on("response.function_call_arguments.done", (event: any) => {
+        console.log("Function call:", event);
+        if (config.onToolCall) {
+          try {
+            const args = JSON.parse(event.arguments);
+            config.onToolCall(event.name, args);
+          } catch (e) {
+            console.error("Error parsing function arguments:", e);
+          }
+        }
       });
 
       client.on(ServerEventType.ERROR, (event: any) => {

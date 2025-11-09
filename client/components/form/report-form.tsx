@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FormNavigation } from "./form-navigation";
 import { FormSection } from "./form-section";
 import { FormConfig } from "@/types/form";
+import { useFormContext } from "@/contexts/form-context";
 
 interface ReportFormProps {
   config: FormConfig;
@@ -10,11 +11,7 @@ interface ReportFormProps {
 
 export function ReportForm({ config }: ReportFormProps) {
   const [currentSection, setCurrentSection] = useState(0);
-  const [formData, setFormData] = useState<Record<string, string>>({});
-
-  const updateFormData = (inputId: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [inputId]: value }));
-  };
+  const { formData, updateFormData } = useFormContext();
 
   const isSectionComplete = (sectionIndex: number) => {
     const section = config.sections[sectionIndex];

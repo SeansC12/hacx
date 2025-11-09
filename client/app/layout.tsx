@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navbar";
+import { FormProvider } from "@/contexts/form-context";
 
 const latoFont = Lato({
   subsets: ["latin"],
@@ -29,12 +30,14 @@ export default function RootLayout({
       <body
         className={`${latoFont.className} antialiased w-screen h-screen flex flex-col`}
       >
-        <header>
-          <nav>
-            <NavBar />
-          </nav>
-        </header>
-        <div className="grow">{children}</div>
+        <FormProvider>
+          <header>
+            <nav>
+              <NavBar />
+            </nav>
+          </header>
+          <div className="grow">{children}</div>
+        </FormProvider>
       </body>
     </html>
   );

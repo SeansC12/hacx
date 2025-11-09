@@ -1,39 +1,38 @@
 "use client";
 
-import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
 import { useState } from "react";
 import { Mic, Square, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function VoiceAssistantButton() {
-  const { isConnected, isListening, isSpeaking, error, connect, disconnect } =
-    useVoiceAssistant({
-      endpoint:
-        process.env.NEXT_PUBLIC_VOICELIVE_ENDPOINT ||
-        "wss://ai-hacx-voice.services.ai.azure.com/voice-live/realtime?api-version=2025-10-01",
-      apiKey: process.env.NEXT_PUBLIC_VOICELIVE_API_KEY || "",
-      model: "gpt-4o-realtime-preview",
-      voice: {
-        name: "en-US-Ava:DragonHDLatestNeural",
-        type: "azure-standard",
-        temperature: 0.8,
-      },
-      instructions:
-        "You are a helpful AI assistant. You are an English teacher trying to teach a preschooler English by correcting the user's grammar.",
-    });
+interface VoiceAssistantButtonProps {
+  isConnected: boolean;
+  isListening: boolean;
+  isSpeaking: boolean;
+  error: string | null;
+  onConnect: () => Promise<void>;
+  onDisconnect: () => void;
+}
 
+export function VoiceAssistantButton({
+  isConnected,
+  isListening,
+  isSpeaking,
+  error,
+  onConnect,
+  onDisconnect,
+}: VoiceAssistantButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleInitialClick = async () => {
     setIsConnecting(true);
-    await connect();
+    await onConnect();
     setIsConnecting(false);
     setIsExpanded(true);
   };
 
   const handleStopClick = () => {
-    disconnect();
+    onDisconnect();
     setIsExpanded(false);
   };
 
@@ -71,82 +70,37 @@ export function VoiceAssistantButton() {
           </span>
         </button>
 
-        {/* Split Buttons Container */}
-        <div
+        {/* Expanded Microphone Button */}
+        <button
+          onClick={handleStopClick}
           className={cn(
-            "flex items-center gap-4 transition-all duration-700 ease-in-out absolute",
+            "absolute transition-all duration-700 ease-in-out",
+            "w-16 h-16 rounded-full flex items-center justify-center",
+            "shadow-lg hover:shadow-xl active:scale-95",
             isExpanded
-              ? "opacity-100 scale-100 delay-150"
-              : "opacity-0 scale-90 pointer-events-none",
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-0 pointer-events-none",
+            isListening
+              ? "bg-gradient-to-br from-red-500 to-red-600"
+              : isSpeaking
+                ? "bg-gradient-to-br from-blue-500 to-purple-600 animate-pulse"
+                : "bg-gradient-to-br from-purple-500 to-indigo-600",
           )}
+          aria-label={isListening ? "Listening..." : "Stop recording"}
         >
-          {/* Microphone Button */}
-          <button
-            onClick={() => {}}
-            disabled={!isConnected}
-            className={cn(
-              "relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-500",
-              "shadow-lg hover:shadow-xl hover:scale-105 active:scale-95",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
-              isListening ? "bg-green-800" : "bg-yellow-500",
-            )}
-            aria-label={isListening ? "Listening..." : "Ready to listen"}
-          >
-            <Mic
-              className={cn(
-                "h-7 w-7 text-white transition-transform duration-500",
-                isListening && "animate-pulse scale-110",
-              )}
-            />
-          </button>
-
-          {/* Stop Button */}
-          <button
-            onClick={handleStopClick}
-            className={cn(
-              "relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-300 ease-out",
-              "bg-blue-primary shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 hover:bg-blue-secondary",
-            )}
-            aria-label="Stop and reset"
-          >
-            <Square className="h-6 w-6 text-white fill-white" />
-          </button>
-        </div>
+          {isListening ? (
+            <Mic className="w-8 h-8 text-white animate-pulse" />
+          ) : (
+            <Square className="w-6 h-6 text-white" />
+          )}
+        </button>
       </div>
+
+      {error && (
+        <div className="absolute top-24 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded text-sm max-w-xs">
+          {error}
+        </div>
+      )}
     </div>
-  );
-}
-
-export function MicrophoneButton() {
-  const [isActive, setIsActive] = useState(false);
-
-  const handleClick = () => {
-    setIsActive(!isActive);
-  };
-
-  return (
-    <button
-      onClick={handleClick}
-      className={cn(
-        "relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-500 ease-out",
-        "shadow-lg hover:shadow-xl hover:scale-105 active:scale-95",
-        isActive
-          ? "bg-gradient-to-br from-emerald-400 to-teal-500"
-          : "bg-gradient-to-br from-blue-500 to-indigo-600",
-      )}
-      aria-label={isActive ? "Stop recording" : "Start recording"}
-    >
-      <Mic
-        className={cn(
-          "h-7 w-7 text-white transition-transform duration-500",
-          isActive && "scale-110",
-        )}
-      />
-
-      {/* Pulse animation ring when active */}
-      {isActive && (
-        <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-75 animate-ping" />
-      )}
-    </button>
   );
 }

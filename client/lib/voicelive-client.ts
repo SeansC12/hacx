@@ -28,6 +28,7 @@ export interface SessionConfig {
     prefix_padding_ms: number;
     silence_duration_ms: number;
   };
+  tools?: any[];
 }
 
 export class VoiceLiveClient extends EventEmitter {
