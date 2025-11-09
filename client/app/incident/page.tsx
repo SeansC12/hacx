@@ -2,7 +2,7 @@
 
 import { ReportForm } from "@/components/form/report-form";
 import { incidentFormConfig } from "@/form-config/incident-form";
-import { VoiceAssistant } from "@/components/voice-assistant/voice-assistant";
+import { VoiceAssistant } from "@/components/voice-assistant/voice-assistant-ui";
 
 export default function IncidentPage() {
   return (
