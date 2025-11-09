@@ -27,11 +27,11 @@ export default function ButtonCard({ title, image, link, description }: ButtonCa
         </div>
 
         <div className="bottom-0 left-0 right-0 bg-blue-200 px-4 py-3 transition-colors duration-300 group-hover:bg-blue-800">
-          <h2 className="text-2xl font-bold text-gray-900 group-hover:text-white transition-colors duration-300">
+          <h2 className="text-xl font-bold text-gray-900 group-hover:text-white transition-colors duration-300">
             {title}
           </h2>
           {description && (
-            <p className="text-gray-600 group-hover:text-gray-300 transition-colors duration-300">
+            <p className="text-sm text-gray-600 group-hover:text-gray-300 transition-colors duration-300">
               {description}
             </p>
           )}

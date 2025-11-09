@@ -13,11 +13,11 @@ export default function NavBar() {
           className="h-28 w-56 object-contain"
         />
         <div className="flex-1"/>
-        <div className="flex items-center">
-          <MessageSquareWarningIcon className="w-8 h-8 text-gray-600 mr-2" />
-          <div className="font-bold text-lg text-gray-600">
+        <div className="flex items-center justify-end gap-4">
+          <div className="font-bold text-gray-600 text-end">
             This is an unmanned kiosk. If you are in need of immediate assistance, please call 999.
           </div>
+          <MessageSquareWarningIcon className="w-8 h-8 text-gray-600 mr-2" />
         </div>
       </div>
     </div>

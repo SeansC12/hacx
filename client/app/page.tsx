@@ -11,12 +11,12 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center flex-col w-full h-dvh">
       <Banner />
-      <div className="flex-1 w-full flex items-center justify-between gap-4 px-16">
+      <div className="flex-1 w-full flex items-center justify-between gap-4 px-10">
         <ButtonCard
           title="Traffic Matters"
           image={TrafficMatterImage}
           link={"/incident"}
-          description="Report traffic-related incidents or violations."
+          description="Report traffic-related incidents."
         />
         <ButtonCard
           title="Lost Items"
