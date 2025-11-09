@@ -6,17 +6,26 @@ interface FormSectionProps {
   section: FormSectionType;
   values: Record<string, string>;
   onChange: (inputId: string, value: string) => void;
+  headerRight?: React.ReactNode;
+  belowDescription?: React.ReactNode; // Renders between description and first input
 }
 
-export function FormSection({ section, values, onChange }: FormSectionProps) {
+export function FormSection({ section, values, onChange, headerRight, belowDescription }: FormSectionProps) {
   return (
     <div className="max-w-2xl space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">{section.name}</h2>
-        {section.description && (
-          <p className="text-gray-600">{section.description}</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold mb-2">{section.name}</h2>
+          {section.description && (
+            <p className="text-gray-600">{section.description}</p>
+          )}
+        </div>
+        {headerRight && (
+          <div className="pt-1 flex-shrink-0">{headerRight}</div>
         )}
       </div>
+
+      {belowDescription && <div className="-mt-4">{belowDescription}</div>}
 
       <div className="space-y-6">
         {section.inputs.map((input) => (
