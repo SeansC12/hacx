@@ -7,7 +7,8 @@ export class AudioProcessor {
   private isPlaying = false;
   private audioQueue: AudioBuffer[] = [];
   private sampleRate = 24000;
-  private nextPlayTime = 0; // Track when the next audio should start
+  private nextPlayTime = 0;
+  private activeSources: AudioBufferSourceNode[] = []; // Track all active audio sources
 
   async startCapture(
     onAudioData: (audioBase64: string) => void,
@@ -89,7 +90,7 @@ export class AudioProcessor {
     }
 
     this.isPlaying = true;
-    this.nextPlayTime = 0; // Reset playback timing
+    this.nextPlayTime = 0;
     console.log("Audio playback ready");
   }
 
@@ -115,6 +116,18 @@ export class AudioProcessor {
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;
       source.connect(this.audioContext.destination);
+
+      // Track this source
+      this.activeSources.push(source);
+
+      // Remove from active sources when it ends
+      source.onended = () => {
+        const index = this.activeSources.indexOf(source);
+        if (index > -1) {
+          this.activeSources.splice(index, 1);
+        }
+      };
+
       source.start(this.nextPlayTime);
 
       // Update next play time to be after this buffer finishes
@@ -125,10 +138,21 @@ export class AudioProcessor {
   }
 
   stopPlayback(): void {
+    // Stop all active audio sources immediately
+    this.activeSources.forEach((source) => {
+      try {
+        source.stop();
+        source.disconnect();
+      } catch (e) {
+        // Source might already be stopped
+      }
+    });
+
+    this.activeSources = [];
     this.isPlaying = false;
     this.audioQueue = [];
-    this.nextPlayTime = 0; // Reset playback timing
-    console.log("Audio playback stopped");
+    this.nextPlayTime = 0;
+    console.log("Audio playback stopped - all sources cleared");
   }
 
   cleanup(): void {

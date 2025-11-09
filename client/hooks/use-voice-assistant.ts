@@ -65,9 +65,10 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
       });
 
       client.on(ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED, () => {
-        console.log("User started speaking");
+        console.log("User started speaking - interrupting playback");
         setIsListening(true);
         audioProcessor.stopPlayback();
+        client.cancelResponse();
       });
 
       client.on(ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STOPPED, () => {
