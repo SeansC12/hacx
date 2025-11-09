@@ -2,13 +2,13 @@
 
 import { ReportForm } from "@/components/form/report-form";
 import { incidentFormConfig } from "@/form-config/incident-form";
-import { VoiceAssistantButton } from "@/components/voice-assistant-button";
+import { VoiceAssistant } from "@/components/voice-assistant/voice-assistant";
 
 export default function IncidentPage() {
   return (
     <div className="grid grid-cols-1 grid-rows-[90%_10%] w-full h-full">
       <ReportForm config={incidentFormConfig} />
-      <VoiceAssistantButton />
+      <VoiceAssistant />
     </div>
   );
 }

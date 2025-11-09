@@ -1,7 +1,6 @@
 "use client";
 
 import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Mic, Square, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,16 +45,16 @@ export function VoiceAssistantButton() {
           onClick={handleInitialClick}
           disabled={isConnecting}
           className={cn(
-            "relative flex items-center gap-3 px-8 py-4 cursor-pointer rounded-sm font-medium transition-all duration-700 ease-in-out",
-            "bg-transparent border-2 border-transparent shadow-lg hover:shadow-xl",
+            "relative flex items-center gap-3 px-4 py-3 cursor-pointer rounded-sm font-medium transition-all duration-700 ease-in-out",
+            "bg-transparent shadow-lg hover:shadow-xl",
             "active:scale-95 absolute disabled:cursor-not-allowed disabled:opacity-50",
             "before:absolute before:inset-0 before:rounded-sm before:p-[2px]",
-            "before:bg-gradient-to-r before:from-purple-500 before:to-indigo-600",
+            "before:bg-gradient-to-r before:from-blue-500 before:via-purple-500 before:to-orange-500",
             "before:-z-10 before:content-['']",
             "after:absolute after:inset-[2px] after:rounded-sm after:bg-white",
             "after:-z-10 after:content-['']",
             "after:transition-colors after:duration-200",
-            "hover:after:bg-neutral-50",
+            "hover:after:bg-neutral-100",
             isExpanded
               ? "opacity-0 scale-90 pointer-events-none"
               : "opacity-100 scale-100",
@@ -67,7 +66,7 @@ export function VoiceAssistantButton() {
           ) : (
             <Sparkles className="h-5 w-5 text-purple-500" />
           )}
-          <span className="font-bold bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
+          <span className="font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
             {isConnecting ? "Connecting..." : "Talk to Officer Clif"}
           </span>
         </button>
@@ -89,7 +88,7 @@ export function VoiceAssistantButton() {
               "relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-500",
               "shadow-lg hover:shadow-xl hover:scale-105 active:scale-95",
               "disabled:opacity-50 disabled:cursor-not-allowed",
-              isListening ? "bg-green-800" : "bg-red-500",
+              isListening ? "bg-green-800" : "bg-yellow-500",
             )}
             aria-label={isListening ? "Listening..." : "Ready to listen"}
           >
