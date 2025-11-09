@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FormInput as FormInputType } from "@/types/form";
+import { useFormContext } from "@/contexts/form-context";
 
 interface FormInputProps {
   input: FormInputType;
@@ -18,32 +19,54 @@ interface FormInputProps {
 }
 
 export function FormInput({ input, value, onChange }: FormInputProps) {
+  const { pendingUpdate } = useFormContext();
+  const isPending = pendingUpdate?.inputId === input.id;
+
   const renderInput = () => {
     switch (input.type) {
       case "text":
         return (
-          <Input
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={input.name}
-          />
+          <div className="relative">
+            <Input
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder={input.name}
+              className={isPending ? "border-yellow-500 bg-yellow-50" : ""}
+            />
+            {isPending && (
+              <div className="absolute top-10 left-0 text-xs text-yellow-600 font-medium">
+                Pending confirmation
+              </div>
+            )}
+          </div>
         );
 
       case "textarea":
         return (
-          <textarea
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            rows={3}
-            className="w-full p-2 border rounded-md resize-none"
-            placeholder={input.name}
-          />
+          <div className="relative">
+            <textarea
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              rows={3}
+              className={`w-full p-2 border rounded-md resize-none ${
+                isPending ? "border-yellow-500 bg-yellow-50" : ""
+              }`}
+              placeholder={input.name}
+            />
+            {isPending && (
+              <div className="absolute top-14 left-0 text-xs text-yellow-600 font-medium">
+                Pending confirmation
+              </div>
+            )}
+          </div>
         );
 
       case "select":
         return (
           <Select value={value} onValueChange={onChange}>
-            <SelectTrigger>
+            <SelectTrigger
+              className={isPending ? "border-yellow-500 bg-yellow-50" : ""}
+            >
               <SelectValue placeholder={`Select ${input.name}`} />
             </SelectTrigger>
             <SelectContent>
@@ -62,6 +85,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
             type="date"
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            className={isPending ? "border-yellow-500 bg-yellow-50" : ""}
           />
         );
 
@@ -74,7 +98,9 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
                 className={`cursor-pointer transition-colors ${
                   value === option
                     ? "border-blue-500 bg-blue-50"
-                    : "hover:bg-gray-50"
+                    : isPending && pendingUpdate.value === option
+                      ? "border-yellow-500 bg-yellow-50"
+                      : "hover:bg-gray-50"
                 }`}
                 onClick={() => onChange(option)}
               >

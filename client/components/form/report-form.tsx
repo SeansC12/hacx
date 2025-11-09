@@ -76,7 +76,7 @@ export function ReportForm({ config }: ReportFormProps) {
         />
 
         <div className="flex-1 p-6">
-          <div className="mb-8">
+          <div className="mb-10">
             <FormSection
               section={config.sections[currentSection]}
               values={formData}

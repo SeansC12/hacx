@@ -13,7 +13,8 @@ export interface VoiceAssistantConfig {
   };
   instructions: string;
   tools?: any[];
-  onToolCall?: (toolName: string, args: any) => void;
+  onToolCall?: (toolName: string, args: any, callId: string) => void;
+  onConnect?: (client: VoiceLiveClient) => void;
 }
 
 export function useVoiceAssistant(config: VoiceAssistantConfig) {
@@ -29,7 +30,6 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
     try {
       setError(null);
 
-      // Create client
       const client = new VoiceLiveClient(
         config.endpoint,
         config.apiKey,
@@ -37,15 +37,17 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
       );
       clientRef.current = client;
 
-      // Create audio processor
       const audioProcessor = new AudioProcessor();
       audioProcessorRef.current = audioProcessor;
 
-      // Connect to Voice Live API
       await client.connect();
       setIsConnected(true);
 
-      // Setup session with tools if provided
+      // Notify parent component
+      if (config.onConnect) {
+        config.onConnect(client);
+      }
+
       await client.updateSession({
         modalities: ["text", "audio"],
         instructions: config.instructions,
@@ -61,7 +63,6 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
         tools: config.tools || [],
       });
 
-      // Setup event listeners
       client.on(ServerEventType.SESSION_UPDATED, () => {
         console.log("Session ready");
         startListening();
@@ -94,13 +95,13 @@ export function useVoiceAssistant(config: VoiceAssistantConfig) {
         setIsSpeaking(false);
       });
 
-      // Handle function calls
+      // Handle function calls with call_id
       client.on("response.function_call_arguments.done", (event: any) => {
         console.log("Function call:", event);
         if (config.onToolCall) {
           try {
             const args = JSON.parse(event.arguments);
-            config.onToolCall(event.name, args);
+            config.onToolCall(event.name, args, event.call_id);
           } catch (e) {
             console.error("Error parsing function arguments:", e);
           }

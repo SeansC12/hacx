@@ -18,7 +18,7 @@ export function FormSection({ section, values, onChange }: FormSectionProps) {
         )}
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-10">
         {section.inputs.map((input) => (
           <FormInput
             key={input.id}

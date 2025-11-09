@@ -103,6 +103,22 @@ export class VoiceLiveClient extends EventEmitter {
     });
   }
 
+  async sendFunctionOutput(callId: string, output: any): Promise<void> {
+    this.send({
+      type: "conversation.item.create",
+      item: {
+        type: "function_call_output",
+        call_id: callId,
+        output: JSON.stringify(output),
+      },
+    });
+
+    // Trigger response generation
+    this.send({
+      type: "response.create",
+    });
+  }
+
   private send(data: any): void {
     if (this.ws && this.isConnected) {
       this.ws.send(JSON.stringify(data));
