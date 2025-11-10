@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SpfLogo from "@/public/spf-logo.png";
+import { MessageSquareWarningIcon } from "lucide-react";
 
 export default function NavBar() {
   return (
@@ -11,8 +12,12 @@ export default function NavBar() {
           alt="SPF Logo"
           className="h-28 w-56 object-contain"
         />
-        <div className="font-bold text-xl">
-          This is an unmanned kiosk. Learn more.
+        <div className="flex-1"/>
+        <div className="flex items-center justify-end gap-4">
+          <div className="font-bold text-gray-600 text-end">
+            This is an unmanned kiosk. If you are in need of immediate assistance, please call 999.
+          </div>
+          <MessageSquareWarningIcon className="w-8 h-8 text-gray-600 mr-2" />
         </div>
       </div>
     </div>
