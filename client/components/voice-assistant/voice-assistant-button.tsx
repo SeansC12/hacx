@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mic, Square, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useFormContext } from "@/contexts/form-context";
 
 interface VoiceAssistantButtonProps {
   isConnected: boolean;
@@ -23,6 +24,7 @@ export function VoiceAssistantButton({
 }: VoiceAssistantButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+  const { setPendingUpdate } = useFormContext();
 
   const handleInitialClick = async () => {
     setIsConnecting(true);
@@ -32,6 +34,7 @@ export function VoiceAssistantButton({
   };
 
   const handleStopClick = () => {
+    setPendingUpdate(null);
     onDisconnect();
     setIsExpanded(false);
   };

@@ -4,7 +4,6 @@ import { FormNavigation } from "./form-navigation";
 import { FormSection } from "./form-section";
 import { FormConfig } from "@/types/form";
 import { useFormContext } from "@/contexts/form-context";
-import LogInWithSingpassButton from "@/components/log-in-with-singpass-button";
 
 interface ReportFormProps {
   config: FormConfig;
@@ -65,7 +64,7 @@ export function ReportForm({ config }: ReportFormProps) {
       setCurrentSection((prev) => prev - 1);
     }
   };
-  
+
   return (
     <div className="flex justify-center h-full bg-gray-50">
       <div className="flex w-full max-w-[1200px] min-[670px]:px-8 lg:px-0">
@@ -77,22 +76,11 @@ export function ReportForm({ config }: ReportFormProps) {
         />
 
         <div className="flex-1 p-6">
-          <div className="mb-10">
+          <div className="mb-8">
             <FormSection
               section={config.sections[currentSection]}
               values={formData}
               onChange={updateFormData}
-              belowDescription={
-                config.sections[currentSection].name ===
-                "Personal Information" ? (
-                  <div className="mt-2 mb-2">
-                    <LogInWithSingpassButton
-                      onClick={() => {}}
-                      className="h-10 cursor-pointer select-none"
-                    />
-                  </div>
-                ) : undefined
-              }
             />
           </div>
 

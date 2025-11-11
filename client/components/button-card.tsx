@@ -8,9 +8,12 @@ interface ButtonCardProps {
   description?: string;
 }
 
-
-
-export default function ButtonCard({ title, image, link, description }: ButtonCardProps) {
+export default function ButtonCard({
+  title,
+  image,
+  link,
+  description,
+}: ButtonCardProps) {
   return (
     <Link href={link} className="flex-1 block group cursor-pointer">
       <div className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-[1.02]">
@@ -21,9 +24,7 @@ export default function ButtonCard({ title, image, link, description }: ButtonCa
             alt={title}
             layout="fill"
           />
-          <div
-            className={`inset-0 bg-blue-300/45 mix-blend-multiply`}
-          />
+          <div className={`inset-0 bg-blue-300/45 mix-blend-multiply`} />
         </div>
 
         <div className="bottom-0 left-0 right-0 bg-blue-200 px-4 py-3 transition-colors duration-300 group-hover:bg-blue-800">

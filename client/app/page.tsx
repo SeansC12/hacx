@@ -23,7 +23,7 @@ export default function Home() {
           image={LostItemImage}
           link={"/lost-items"}
           description="Report or search for lost items."
-        /> 
+        />
         <ButtonCard
           title="Lodge a Report"
           image={LodgeReportImage}
@@ -31,9 +31,7 @@ export default function Home() {
           description="Lodge a general police report."
         />
       </div>
-      <div className="py-10">
-
-      </div>
+      <div className="py-10"></div>
     </div>
   );
 }

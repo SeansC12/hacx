@@ -24,17 +24,39 @@ export function FormProvider({ children }: { children: React.ReactNode }) {
   } | null>(null);
 
   const updateFormData = (inputId: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [inputId]: value }));
+    console.log("updateFormData called:", inputId, value);
+    setFormData((prev) => {
+      const newData = { ...prev, [inputId]: value };
+      console.log("Updated formData:", newData);
+      return newData;
+    });
   };
 
   const confirmPendingUpdate = () => {
-    if (pendingUpdate) {
-      updateFormData(pendingUpdate.inputId, pendingUpdate.value);
-      setPendingUpdate(null);
-    }
+    console.log("confirmPendingUpdate called, pendingUpdate:", pendingUpdate);
+
+    setPendingUpdate((current) => {
+      if (current) {
+        console.log(
+          "Confirming update for:",
+          current.inputId,
+          "=",
+          current.value,
+        );
+        setFormData((prev) => {
+          const newData = { ...prev, [current.inputId]: current.value };
+          console.log("FormData after confirmation:", newData);
+          return newData;
+        });
+      } else {
+        console.log("No pending update to confirm");
+      }
+      return null;
+    });
   };
 
   const cancelPendingUpdate = () => {
+    console.log("cancelPendingUpdate called");
     setPendingUpdate(null);
   };
 

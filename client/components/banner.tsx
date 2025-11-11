@@ -8,11 +8,9 @@ export default function Banner() {
         <h1 className="text-7xl  font-extrabold">
           Woodleigh Neighbourhood Police Post
         </h1>
-        <h2 className="text-2xl">
-          Please select an option below to continue.
-        </h2>
+        <h2 className="text-2xl">Please select an option below to continue.</h2>
       </div>
-      <div className="flex-1"/>
+      <div className="flex-1" />
       <Image src={bannerSvg} alt="Woodleigh NPP Logo" className="h-48" />
     </div>
   );
