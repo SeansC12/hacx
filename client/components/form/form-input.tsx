@@ -35,7 +35,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             rows={3}
-            className="w-full p-2 border rounded-md resize-none"
+            className="w-full resize-none rounded-md border p-2"
             placeholder={input.name}
           />
         );
@@ -106,7 +106,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
     <div className="space-y-2">
       <label className="block text-sm font-medium">
         {input.name}
-        {input.required && <span className="text-red-500 ml-1">*</span>}
+        {input.required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {input.description && (
         <p className="text-sm text-gray-600">{input.description}</p>

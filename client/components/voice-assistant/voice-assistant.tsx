@@ -5,9 +5,9 @@ import { VoiceAssistantButton } from "./voice-assistant-button";
 
 export function VoiceAssistant() {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <GradientFade />
-      <div className="grow flex flex-col items-center bg-white">
+      <div className="flex grow flex-col items-center bg-white">
         <VoiceAssistantButton />
       </div>
     </div>

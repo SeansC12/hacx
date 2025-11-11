@@ -10,19 +10,23 @@ interface FormSectionProps {
   belowDescription?: React.ReactNode; // Renders between description and first input
 }
 
-export function FormSection({ section, values, onChange, headerRight, belowDescription }: FormSectionProps) {
+export function FormSection({
+  section,
+  values,
+  onChange,
+  headerRight,
+  belowDescription,
+}: FormSectionProps) {
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold mb-2">{section.name}</h2>
+          <h2 className="mb-2 text-2xl font-bold">{section.name}</h2>
           {section.description && (
             <p className="text-gray-600">{section.description}</p>
           )}
         </div>
-        {headerRight && (
-          <div className="pt-1 flex-shrink-0">{headerRight}</div>
-        )}
+        {headerRight && <div className="flex-shrink-0 pt-1">{headerRight}</div>}
       </div>
 
       {belowDescription && <div className="-mt-4">{belowDescription}</div>}

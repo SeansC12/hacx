@@ -14,15 +14,15 @@ export function FormNavigation({
   maxAccessibleSection,
 }: FormNavigationProps) {
   return (
-    <nav className="w-64 p-6 border-r">
+    <nav className="w-64 border-r p-6">
       <div className="space-y-2">
         {sections.slice(0, maxAccessibleSection + 1).map((section, index) => (
           <button
             key={index}
             onClick={() => onSectionChange(index)}
-            className={`w-full text-left p-3 rounded transition-colors ${
+            className={`w-full rounded p-3 text-left transition-colors ${
               index === currentSection
-                ? "bg-blue-100 text-blue-700 font-medium"
+                ? "bg-blue-100 font-medium text-blue-700"
                 : "text-gray-600 hover:bg-gray-100"
             }`}
           >
