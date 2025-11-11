@@ -66,7 +66,7 @@ export function ReportForm({ config }: ReportFormProps) {
   };
 
   return (
-    <div className="flex justify-center h-full bg-gray-50">
+    <div className="flex h-full justify-center bg-gray-50">
       <div className="flex w-full max-w-[1200px] min-[670px]:px-8 lg:px-0">
         <FormNavigation
           sections={config.sections}
@@ -84,7 +84,7 @@ export function ReportForm({ config }: ReportFormProps) {
             />
           </div>
 
-          <div className="flex justify-between max-w-2xl">
+          <div className="flex max-w-2xl justify-between">
             <Button
               onClick={handlePrev}
               disabled={!canGoToPrev()}
