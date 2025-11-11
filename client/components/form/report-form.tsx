@@ -94,6 +94,29 @@ export function ReportForm({ config }: ReportFormProps) {
                       className="h-10 cursor-pointer select-none"
                     />
                   </div>
+                ) : config.sections[currentSection].name ===
+                  "Confirmation" ? (
+                  <div className="mt-4 mb-6">
+                    <div className="rounded-md border overflow-hidden bg-white">
+                      <iframe
+                        src="/form.pdf"
+                        title="Report preview"
+                        className="w-full h-[600px]"
+                      />
+                    </div>
+                    <div className="mt-2 text-sm text-gray-500">
+                      Can’t see the preview? {" "}
+                      <a
+                        href="/form.pdf"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline"
+                      >
+                        Open the PDF in a new tab
+                      </a>
+                      .
+                    </div>
+                  </div>
                 ) : undefined
               }
             />
