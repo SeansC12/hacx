@@ -9,7 +9,7 @@ export function VoiceAssistantUI({ formConfig }: { formConfig: FormConfig }) {
   return (
     <div className="flex w-full flex-col">
       <GradientFade />
-      <div className="grow flex flex-col items-center bg-white">
+      <div className="flex grow flex-col items-center bg-white">
         <VoiceFormAssistant formConfig={formConfig} />
       </div>
     </div>

@@ -40,16 +40,16 @@ export function VoiceAssistantButton({
   };
 
   return (
-    <div className="relative flex items-center justify-center h-full">
-      <div className="relative flex items-center justify-center min-w-[280px] h-20">
+    <div className="relative flex h-full items-center justify-center">
+      <div className="relative flex h-20 min-w-[280px] items-center justify-center">
         {/* Initial Button */}
         <button
           onClick={handleInitialClick}
           disabled={isConnecting}
           className={cn(
-            "relative flex items-center gap-3 px-4 py-3 cursor-pointer rounded-sm font-medium transition-all duration-700 ease-in-out",
+            "relative flex cursor-pointer items-center gap-3 rounded-sm px-4 py-3 font-medium transition-all duration-700 ease-in-out",
             "bg-transparent shadow-lg hover:shadow-xl",
-            "active:scale-95 absolute disabled:cursor-not-allowed disabled:opacity-50",
+            "absolute active:scale-95 disabled:cursor-not-allowed disabled:opacity-50",
             "before:absolute before:inset-0 before:rounded-sm before:p-[2px]",
             "before:bg-gradient-to-r before:from-blue-500 before:via-purple-500 before:to-orange-500",
             "before:-z-10 before:content-['']",
@@ -58,17 +58,17 @@ export function VoiceAssistantButton({
             "after:transition-colors after:duration-200",
             "hover:after:bg-neutral-100",
             isExpanded
-              ? "opacity-0 scale-90 pointer-events-none"
-              : "opacity-100 scale-100",
+              ? "pointer-events-none scale-90 opacity-0"
+              : "scale-100 opacity-100",
           )}
           aria-label="Talk to Officer Clif"
         >
           {isConnecting ? (
-            <Loader2 className="h-5 w-5 text-purple-500 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin text-purple-500" />
           ) : (
             <Sparkles className="h-5 w-5 text-purple-500" />
           )}
-          <span className="font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text font-bold text-transparent">
             {isConnecting ? "Connecting..." : "Talk to Officer Clif"}
           </span>
         </button>
@@ -78,29 +78,29 @@ export function VoiceAssistantButton({
           onClick={handleStopClick}
           className={cn(
             "absolute transition-all duration-700 ease-in-out",
-            "w-16 h-16 rounded-full flex items-center justify-center",
+            "flex h-16 w-16 items-center justify-center rounded-full",
             "shadow-lg hover:shadow-xl active:scale-95",
             isExpanded
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-0 pointer-events-none",
+              ? "scale-100 opacity-100"
+              : "pointer-events-none scale-0 opacity-0",
             isListening
               ? "bg-gradient-to-br from-red-500 to-red-600"
               : isSpeaking
-                ? "bg-gradient-to-br from-blue-500 to-purple-600 animate-pulse"
+                ? "animate-pulse bg-gradient-to-br from-blue-500 to-purple-600"
                 : "bg-gradient-to-br from-purple-500 to-indigo-600",
           )}
           aria-label={isListening ? "Listening..." : "Stop recording"}
         >
           {isListening ? (
-            <Mic className="w-8 h-8 text-white animate-pulse" />
+            <Mic className="h-8 w-8 animate-pulse text-white" />
           ) : (
-            <Square className="w-6 h-6 text-white" />
+            <Square className="h-6 w-6 text-white" />
           )}
         </button>
       </div>
 
       {error && (
-        <div className="absolute top-24 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded text-sm max-w-xs">
+        <div className="absolute top-24 max-w-xs rounded border border-red-400 bg-red-100 px-4 py-2 text-sm text-red-700">
           {error}
         </div>
       )}

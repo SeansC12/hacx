@@ -36,13 +36,13 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
               placeholder={input.name}
               className={
                 isPending
-                  ? "border-yellow-500 bg-yellow-50 text-gray-900"
-                  : "text-gray-900"
+                  ? "border-yellow-500 bg-yellow-50 text-xl text-gray-900"
+                  : "text-xl text-gray-900"
               }
               disabled={isPending}
             />
             {isPending && (
-              <div className="absolute top-10 left-0 text-xs text-yellow-600 font-medium">
+              <div className="absolute top-10 left-0 text-sm font-medium text-yellow-600">
                 Pending confirmation - Say "yes" to confirm
               </div>
             )}
@@ -56,14 +56,14 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
               value={displayValue}
               onChange={(e) => onChange(e.target.value)}
               rows={3}
-              className={`w-full p-2 border rounded-md resize-none text-gray-900 ${
+              className={`w-full resize-none rounded-md border p-2 text-gray-900 ${
                 isPending ? "border-yellow-500 bg-yellow-50" : ""
               }`}
               placeholder={input.name}
               disabled={isPending}
             />
             {isPending && (
-              <div className="absolute top-24 left-0 text-xs text-yellow-600 font-medium">
+              <div className="absolute top-24 left-0 text-sm font-medium text-yellow-600">
                 Pending confirmation - Say "yes" to confirm
               </div>
             )}
@@ -92,7 +92,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
               </SelectContent>
             </Select>
             {isPending && (
-              <div className="absolute top-10 left-0 text-xs text-yellow-600 font-medium">
+              <div className="absolute top-10 left-0 text-sm font-medium text-yellow-600">
                 Pending confirmation - Say "yes" to confirm
               </div>
             )}
@@ -114,7 +114,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
               disabled={isPending}
             />
             {isPending && (
-              <div className="absolute top-10 left-0 text-xs text-yellow-600 font-medium">
+              <div className="absolute top-10 left-0 text-sm font-medium text-yellow-600">
                 Pending confirmation - Say "yes" to confirm
               </div>
             )}
@@ -146,7 +146,7 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
               ))}
             </div>
             {isPending && (
-              <div className="text-xs text-yellow-600 font-medium text-center mt-2">
+              <div className="mt-2 text-center text-sm font-medium text-yellow-600">
                 Pending confirmation - Say "yes" to confirm
               </div>
             )}
@@ -171,13 +171,13 @@ export function FormInput({ input, value, onChange }: FormInputProps) {
   };
 
   return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-900">
+    <div className="space-y-2 text-lg">
+      <label className="block text-lg font-medium text-gray-900">
         {input.name}
         {input.required && <span className="ml-1 text-red-500">*</span>}
       </label>
       {input.description && (
-        <p className="text-sm text-gray-600">{input.description}</p>
+        <p className="text-lg text-gray-600">{input.description}</p>
       )}
       {renderInput()}
     </div>

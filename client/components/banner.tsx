@@ -3,7 +3,7 @@ import { MessageCircleWarning } from "lucide-react";
 
 export default function Banner() {
   return (
-    <div className="from-blue-dark to-blue-dark flex h-24 w-full items-center justify-start gap-10 bg-gradient-to-r px-10 py-3 shadow-md">
+    <div className="from-blue-dark to-blue-dark flex h-24 w-full items-center justify-center gap-10 bg-gradient-to-r px-10 py-3 shadow-md">
       <div className="flex flex-col gap-4">
         <p className="text-2xl font-bold text-white">
           <MessageCircleWarning className="mr-2 inline-block h-8 w-8" />

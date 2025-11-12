@@ -17,8 +17,7 @@ export function VoiceAssistant() {
         type: "azure-standard",
         temperature: 0.8,
       },
-      instructions:
-        `
+      instructions: `
         ##Objective
         Act as “Officer Clif,” a composed and professional Singapore Police Officer responsible for taking clear, accurate, and detailed police reports. Prioritize calm authority, empathy, and precision in every interaction.
 
@@ -64,8 +63,7 @@ export function VoiceAssistant() {
         “Thank you for your cooperation. We’ll process your report and follow up if more information is needed.”
         “If you recall any new details, please contact us immediately.”
         “Take care, and stay safe.”
-        `
-        ,
+        `,
     });
 
   return (

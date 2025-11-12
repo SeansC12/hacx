@@ -4,6 +4,7 @@ import { FormNavigation } from "./form-navigation";
 import { FormSection } from "./form-section";
 import { FormConfig } from "@/types/form";
 import { useFormContext } from "@/contexts/form-context";
+import LogInWithSingpassButton from "@/components/log-in-with-singpass-button";
 
 interface ReportFormProps {
   config: FormConfig;
@@ -81,6 +82,15 @@ export function ReportForm({ config }: ReportFormProps) {
               section={config.sections[currentSection]}
               values={formData}
               onChange={updateFormData}
+              belowDescription={
+                config.sections[currentSection].name ===
+                  "Personal Information" && (
+                  <LogInWithSingpassButton
+                    onClick={() => {}}
+                    className="mt-3 h-10 cursor-pointer select-none"
+                  />
+                )
+              }
             />
           </div>
 

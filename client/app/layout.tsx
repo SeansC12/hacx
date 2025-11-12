@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${latoFont.className} flex h-screen w-screen flex-col antialiased`}
       >
         <FormProvider>
-            <header>
+          <header>
             <nav>
               <Banner />
               {/* <NavBar /> */}
@@ -39,7 +39,6 @@ export default function RootLayout({
           </header>
           {children}
         </FormProvider>
-        
       </body>
     </html>
   );
