@@ -5,6 +5,7 @@ import { useFormContext } from "@/contexts/form-context";
 import { VoiceAssistantButton } from "./voice-assistant-button";
 import { FormConfig } from "@/types/form";
 import { useRef } from "react";
+import LLM_PROMPT from "@/lib/prompts";
 
 interface VoiceFormAssistantProps {
   formConfig: FormConfig;
@@ -122,16 +123,16 @@ export function VoiceFormAssistant({ formConfig }: VoiceFormAssistantProps) {
         type: "azure-standard",
         temperature: 0.8,
       },
-      instructions: `You are Officer Clif, a friendly and efficient police officer helping citizens fill out an incident report form. Your job is to guide them through the form and extract information from their speech.
+      instructions: `${LLM_PROMPT}.
 
-IMPORTANT RULES:
+FORM FILLING UP IMPORTANT RULES:
 1. ALWAYS use update_form_field immediately when user provides ANY information
 2. After calling update_form_field, ALWAYS ask: "I heard [VALUE] for [FIELD NAME]. Is that correct?"
 3. Listen for confirmation words (yes, correct, that's right, yep, yeah) → call confirm_update
 4. Listen for rejection words (no, wrong, incorrect, that's not right) → call cancel_update and ask them to repeat
 5. Be proactive - don't wait for the user to ask what to do next
 6. Guide them through the form section by section
-7. For emails, type out the email in the input field, and ask the user if it is correct instead. This is because emails can have unique spellings and characters that make it hard to understand and confirm via voice.
+7. For emails, type out the email in the input field, and ask the user if it is correct instead of reading the email out loud. This is because emails can have unique spellings and characters that make it hard to understand and confirm via voice.
 
 Available form fields:
 ${formConfig.sections
