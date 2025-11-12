@@ -94,7 +94,7 @@ export function ReportForm({ config }: ReportFormProps) {
             />
           </div>
 
-          <div className="flex max-w-2xl justify-between">
+          <div className="flex w-full justify-between">
             <Button
               onClick={handlePrev}
               disabled={!canGoToPrev()}
