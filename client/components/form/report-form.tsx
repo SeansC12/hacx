@@ -5,6 +5,7 @@ import { FormSection } from "./form-section";
 import { FormConfig } from "@/types/form";
 import { useFormContext } from "@/contexts/form-context";
 import LogInWithSingpassButton from "@/components/log-in-with-singpass-button";
+import { useRouter } from "next/navigation";
 
 interface ReportFormProps {
   config: FormConfig;
@@ -13,6 +14,7 @@ interface ReportFormProps {
 export function ReportForm({ config }: ReportFormProps) {
   const [currentSection, setCurrentSection] = useState(0);
   const { formData, updateFormData } = useFormContext();
+  const router = useRouter();
 
   const isSectionComplete = (sectionIndex: number) => {
     const section = config.sections[sectionIndex];
@@ -67,8 +69,8 @@ export function ReportForm({ config }: ReportFormProps) {
   };
 
   const handleSubmit = () => {
-    // Placeholder submission logic
-    console.log("Submit:", formData);
+    // Could post formData to an API here before redirect
+    router.push("/incident/success");
   };
 
   return (
@@ -108,7 +110,7 @@ export function ReportForm({ config }: ReportFormProps) {
                         />
                       </div>
                       <p className="text-sm text-gray-500">
-                        If the PDF does not load correctly,{' '}
+                        If the PDF does not load correctly,{" "}
                         <a
                           href="/form.pdf"
                           target="_blank"
