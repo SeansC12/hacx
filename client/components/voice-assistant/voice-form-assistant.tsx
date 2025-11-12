@@ -119,7 +119,7 @@ export function VoiceFormAssistant({ formConfig }: VoiceFormAssistantProps) {
       apiKey: process.env.NEXT_PUBLIC_VOICELIVE_API_KEY || "",
       model: "gpt-4o-realtime-preview",
       voice: {
-        name: "en-US-Ava:DragonHDLatestNeural",
+        name: "en-US-Andrew2:DragonHDLatestNeural",
         type: "azure-standard",
         temperature: 0.8,
       },
