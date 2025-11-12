@@ -16,7 +16,7 @@ export default function IncidentSuccessPage() {
           </p>
         </div>
         <div className="space-y-4">
-          <div className="rounded-md p-4 text-sm text-center text-gray-800">
+          <div className="rounded-md p-4 text-center text-sm text-gray-800">
             Reference ID: <strong>IR-{Date.now()}</strong>
           </div>
           <div className="flex flex-wrap justify-center gap-4">

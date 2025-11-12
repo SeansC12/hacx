@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Mic, Square, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useFormContext } from "@/contexts/form-context";
+import { User } from "lucide-react";
 
 interface VoiceAssistantButtonProps {
   isConnected: boolean;
@@ -48,7 +49,9 @@ export function VoiceAssistantButton({
         <div
           className={cn(
             "flex items-center gap-6 transition-all duration-700",
-            isExpanded ? "pointer-events-none scale-90 opacity-0" : "scale-100 opacity-100",
+            isExpanded
+              ? "pointer-events-none scale-90 opacity-0"
+              : "scale-100 opacity-100",
           )}
         >
           {/* Existing CLIF Button (unchanged styles) */}
@@ -79,20 +82,23 @@ export function VoiceAssistantButton({
             </span>
           </button>
           {/* New Human Button (black theme) */}
-            <button
-              type="button"
-              onClick={() => onRequestHuman?.()}
-              className={cn(
-                "relative flex cursor-pointer items-center gap-3 rounded-sm px-4 py-3 font-bold transition-all duration-700 ease-in-out",
-                "bg-transparent shadow-lg hover:shadow-xl active:scale-95",
-                "before:absolute before:inset-0 before:rounded-sm before:p-[2px] before:bg-black before:-z-10 before:content-['']",
-                "after:absolute after:inset-[2px] after:rounded-sm after:bg-black after:-z-10 after:content-['']",
-                "after:transition-colors after:duration-200 hover:after:bg-neutral-900",
-              )}
-              aria-label="Talk to a human officer"
-            >
-              <span className="text-white">Talk to a Human</span>
-            </button>
+          <button
+            type="button"
+            onClick={() => onRequestHuman?.()}
+            className={cn(
+              "relative flex cursor-pointer items-center gap-3 rounded-sm px-4 py-3 font-bold transition-all duration-700 ease-in-out",
+              "bg-transparent shadow-lg hover:shadow-xl active:scale-95",
+              "before:bg-blue-dark before:absolute before:inset-0 before:-z-10 before:rounded-sm before:p-[2px] before:content-['']",
+              "after:bg-blue-dark after:absolute after:inset-[2px] after:-z-10 after:rounded-sm after:content-['']",
+              "after:transition-colors after:duration-200 hover:after:bg-neutral-900",
+            )}
+            aria-label="Talk to a human officer"
+          >
+            <span className="text-white">
+              <User className="mr-2 inline-block h-5 w-5" />
+              Talk to a Human
+            </span>
+          </button>
         </div>
 
         {/* Expanded Microphone Button */}

@@ -36,7 +36,7 @@ export default function Banner() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Close dialog"
-              className="absolute right-3 top-3 rounded p-1 text-white/70 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="absolute top-3 right-3 rounded p-1 text-white/70 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
               <X className="h-5 w-5" />
             </button>
@@ -44,17 +44,17 @@ export default function Banner() {
               <MessageCircleWarning className="h-6 w-6" /> Unmanned Kiosk
             </h2>
             <p className="text-sm leading-relaxed text-white/90">
-              This kiosk operates <strong>24/7 without on-site staff</strong>. Your
-              interactions are recorded and securely transmitted to the Singapore
-              Police Force systems. For emergencies, please dial <strong>999</strong> or use
-              the emergency assistance channel. A live officer may review and
-              follow up on submissions. Do not leave personal belongings
-              unattended.
+              This kiosk operates <strong>24/7 without on-site staff</strong>.
+              Your interactions are recorded and securely transmitted to the
+              Singapore Police Force systems. For emergencies, please dial{" "}
+              <strong>999</strong> or use the emergency assistance channel. A
+              live officer may review and follow up on submissions. Do not leave
+              personal belongings unattended.
             </p>
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-white px-4 py-2 text-sm font-medium text-blue-dark shadow hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                className="text-blue-dark rounded-md bg-white px-4 py-2 text-sm font-medium shadow hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               >
                 Got it
               </button>
