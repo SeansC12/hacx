@@ -40,7 +40,7 @@ export default function Home() {
         <ButtonCard
           title="Traffic Matters"
           image={CarsCrash}
-          link={"/report"}
+          link={"/incident"}
           description="Lodge a general police report."
         />
       </div>

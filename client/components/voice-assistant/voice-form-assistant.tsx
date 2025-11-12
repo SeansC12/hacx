@@ -119,7 +119,7 @@ export function VoiceFormAssistant({ formConfig }: VoiceFormAssistantProps) {
       apiKey: process.env.NEXT_PUBLIC_VOICELIVE_API_KEY || "",
       model: "gpt-4o-realtime-preview",
       voice: {
-        name: "en-US-Ava:DragonHDLatestNeural",
+        name: "en-US-Andrew2:DragonHDLatestNeural",
         type: "azure-standard",
         temperature: 0.8,
       },
@@ -146,6 +146,14 @@ ${formConfig.sections
         .join("\n")}`,
   )
   .join("\n")}
+
+Key information that the user may ask about:
+1. How do I go to the next page? Why is the "Next" button disabled?
+    - You can only go to the next page after filling in all required fields in the current section.
+2. How do I go back to the previous page?
+    - You can click the "Previous" button to go back to the previous section.
+3. How do I submit the form?
+    - After completing all sections, click the "Submit" button to submit your report.
 
 Example conversation flow:
 User: "My name is John Doe"
