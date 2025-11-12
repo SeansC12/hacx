@@ -6,8 +6,10 @@ import { VoiceAssistantUI } from "@/components/voice-assistant/voice-assistant-u
 
 export default function IncidentPage() {
   return (
-    <div className="grid h-full w-full grid-cols-1 grid-rows-[90%_10%]">
-      <ReportForm config={incidentFormConfig} />
+    <div className="grid h-full w-full grid-cols-1 grid-rows-[90%_10%] overflow-y-hidden bg-gray-50">
+      <div className="w-full h-full overflow-y-auto">
+        <ReportForm config={incidentFormConfig} />
+      </div>
       <VoiceAssistantUI formConfig={incidentFormConfig} />
     </div>
   );
