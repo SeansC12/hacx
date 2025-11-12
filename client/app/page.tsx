@@ -1,7 +1,7 @@
 "use client";
 
 import ButtonCard from "@/components/button-card";
-
+import { useState } from "react";
 import reportImage from "@/public/homepage/edit.svg";
 import CarsCrash from "@/public/homepage/cars-crash.svg";
 import Image from "next/image";
@@ -9,6 +9,23 @@ import SpfLogo from "@/public/spf-logo.png";
 import backgroundImage from "@/public/homepage/Police-patrolling.jpg";
 
 export default function Home() {
+  const [msg, setMsg] = useState("");
+
+  async function turnOn() {
+    await fetch("/api/sendToArduino", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: "1" }),
+    });
+  }
+
+  async function turnOff() {
+    await fetch("/api/sendToArduino", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: "0" }),
+    });
+  }
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center gap-28 overflow-hidden">
       {/* Subtle pattern overlay */}
@@ -30,19 +47,35 @@ export default function Home() {
           Woodleigh Neighbourhood Police Post
         </div>
       </div>
-      <div className="flex w-full items-center justify-between gap-4 px-10">
-        <ButtonCard
-          title="Lodge a report"
-          image={reportImage}
-          link={"/incident"}
-          description="Report traffic-related incidents."
-        />
-        <ButtonCard
-          title="Traffic Matters"
-          image={CarsCrash}
-          link={"/incident"}
-          description="Lodge a general police report."
-        />
+      <div className="flex flex-col items-center gap-6 w-full">
+        <div className="flex w-full items-center justify-between gap-4 px-10">
+          <ButtonCard
+            title="Lodge a report"
+            image={reportImage}
+            link={"/incident"}
+            description="Report traffic-related incidents."
+          />
+          <ButtonCard
+            title="Traffic Matters"
+            image={CarsCrash}
+            link={"/incident"}
+            description="Lodge a general police report."
+          />
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={turnOn}
+              className="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-600"
+            >
+              Turn LED On
+            </button>
+            <button
+              onClick={turnOff}
+              className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600"
+            >
+              Turn LED Off
+            </button>
+          </div>
+        </div>
       </div>
       <Image
         src={backgroundImage}
