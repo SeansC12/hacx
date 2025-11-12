@@ -5,8 +5,8 @@ export const incidentFormConfig: FormConfig = {
   description: "Please provide detailed information about the incident",
   sections: [
     {
-      name: "Personal Information",
-      description: "Your contact details",
+      name: "Informant's Particulars",
+      description: "Your personal details",
       inputs: [
         {
           id: "name",
@@ -27,6 +27,12 @@ export const incidentFormConfig: FormConfig = {
           required: true,
         },
         {
+          id: "dob",
+          name: "Date of Birth",
+          type: "date",
+          required: true,
+        },
+        {
           id: "nationality",
           name: "Nationality",
           type: "select",
@@ -36,9 +42,16 @@ export const incidentFormConfig: FormConfig = {
       ],
     },
     {
-      name: "Incident Details",
+      name: "General Information of the Accident",
       description: "Information about the incident",
       inputs: [
+        {
+          id: "accident_type",
+          name: "Accident Type",
+          type: "select",
+          options: ["Injury", "Other"],
+          required: true,
+        },
         {
           id: "incident_date",
           name: "Date of Incident",
@@ -53,30 +66,74 @@ export const incidentFormConfig: FormConfig = {
           required: true,
         },
         {
-          id: "incident_type",
-          name: "Type of Incident",
-          type: "grid",
-          options: ["Theft", "Scam", "Traffic Offense", "Assault"],
+          id: "weather",
+          name: "Weather Conditions",
+          description: "Please describe the weather conditions at the time",
+          type: "text",
           required: true,
         },
         {
-          id: "description",
-          name: "Description",
-          description: "Please describe what happened",
-          type: "textarea",
+          id: "road_surface",
+          name: "Road Surface Conditions",
+          description:
+            "Please describe the road surface conditions at the time",
+          type: "text",
+          required: true,
+        },
+        {
+          id: "collision_type",
+          name: "Type of Collision",
+          type: "grid",
+          options: ["Head-on", "Rear-end", "Side-impact", "Rollover", "Other"],
           required: true,
         },
       ],
     },
     {
-      name: "Confirmation",
-      description: "Review and submit your report",
+      name: "Details of Person Involved",
+      description: "Information about Persons involved",
       inputs: [
         {
-          id: "signature",
-          name: "Digital Signature",
-          description: "Type your full name to confirm",
+          id: "pedestrians_involved",
+          name: "Pedestrians Involved",
+          type: "select",
+          options: ["Yes", "No"],
+          required: true,
+        },
+        {
+          id: "number_of_injured_pedestrians",
+          name: "Number of Injured Pedestrians",
+          type: "select",
+          options: ["0", "1", "2", "3", "4", "More than 5"],
+          required: true,
+        },
+        {
+          id: "pedestrian_crossing",
+          name: "Use of Pedestrian Crossing",
+          type: "grid",
+          options: ["Yes", "No", "Not Applicable"],
+          required: true,
+        },
+        {
+          id: "weather",
+          name: "Weather Conditions",
+          description: "Please describe the weather conditions at the time",
           type: "text",
+          required: true,
+        },
+        {
+          id: "road_surface",
+          name: "Road Surface Conditions",
+          description:
+            "Please describe the road surface conditions at the time",
+          type: "text",
+          required: true,
+        },
+        {
+          id: "collision_type",
+          name: "Type of Collision",
+          type: "grid",
+          options: ["Head-on", "Rear-end", "Side-impact", "Rollover", "Other"],
           required: true,
         },
       ],
