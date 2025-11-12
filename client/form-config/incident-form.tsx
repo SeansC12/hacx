@@ -114,28 +114,6 @@ export const incidentFormConfig: FormConfig = {
           options: ["Yes", "No", "Not Applicable"],
           required: true,
         },
-        {
-          id: "weather",
-          name: "Weather Conditions",
-          description: "Please describe the weather conditions at the time",
-          type: "text",
-          required: true,
-        },
-        {
-          id: "road_surface",
-          name: "Road Surface Conditions",
-          description:
-            "Please describe the road surface conditions at the time",
-          type: "text",
-          required: true,
-        },
-        {
-          id: "collision_type",
-          name: "Type of Collision",
-          type: "grid",
-          options: ["Head-on", "Rear-end", "Side-impact", "Rollover", "Other"],
-          required: true,
-        },
       ],
     },
     {

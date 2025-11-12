@@ -104,7 +104,7 @@ export function ReportForm({ config }: ReportFormProps) {
                         <iframe
                           src="/form.pdf"
                           title="Report preview"
-                          className="h-[600px] w-full"
+                          className="h-[800px] w-full"
                         />
                       </div>
                       <p className="text-sm text-gray-500">
