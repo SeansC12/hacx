@@ -75,9 +75,44 @@ export function VoiceFormAssistant({ formConfig }: VoiceFormAssistantProps) {
     console.log("Tool call:", toolName, args, "Call ID:", callId);
 
     if (toolName === "update_form_field") {
+      // Find the input field to check if it has options (select/grid)
+      const field = formConfig.sections
+        .flatMap((section) => section.inputs)
+        .find((input) => input.id === args.field_id);
+
+      let finalValue = args.value;
+
+      // If field has options (select or grid), validate the value
+      if (field && field.options && field.options.length > 0) {
+        const valueExists = field.options.some(
+          (option) => option.toLowerCase() === args.value.toLowerCase(),
+        );
+
+        if (!valueExists) {
+          const otherOption = field.options.find(
+            (option) =>
+              option.toLowerCase() === "other" ||
+              option.toLowerCase() === "others" ||
+              option.toLowerCase() === "not applicable",
+          );
+
+          if (otherOption) {
+            console.log(
+              `Value "${args.value}" not found in options. Mapping to "${otherOption}"`,
+            );
+            finalValue = otherOption;
+          } else {
+            console.warn(
+              `Value "${args.value}" not found and no "Other" option available`,
+            );
+            // Keep the original value, but it might not display
+          }
+        }
+      }
+
       setPendingUpdate({
         inputId: args.field_id,
-        value: args.value,
+        value: finalValue,
         label: args.field_label,
       });
 
@@ -85,7 +120,7 @@ export function VoiceFormAssistant({ formConfig }: VoiceFormAssistantProps) {
       if (clientRef.current) {
         clientRef.current.sendFunctionOutput(callId, {
           success: true,
-          message: `Proposed update: ${args.field_label} = ${args.value}. Please confirm with the user.`,
+          message: `Proposed update: ${args.field_label} = ${finalValue}. Please confirm with the user.`,
         });
       }
     } else if (toolName === "confirm_update") {
@@ -133,16 +168,20 @@ FORM FILLING UP IMPORTANT RULES:
 5. Be proactive - don't wait for the user to ask what to do next
 6. Guide them through the form section by section
 7. For emails, type out the email in the input field, and ask the user if it is correct instead of reading the email out loud. This is because emails can have unique spellings and characters that make it hard to understand and confirm via voice.
+8. For dropdown/select fields: If the user provides a value that is NOT in the available options list, the system will automatically map it to "Other" or "Others" if available. Inform the user: "I've selected 'Other' for [FIELD NAME] since [their value] wasn't in the predefined list."
 
 Available form fields:
 ${formConfig.sections
   .map(
     (section, idx) =>
       `\nSection ${idx + 1}: ${section.name}\n${section.inputs
-        .map(
-          (input) =>
-            `  - ${input.name} (ID: ${input.id})${input.required ? " [REQUIRED]" : ""}`,
-        )
+        .map((input) => {
+          let optionsStr = "";
+          if (input.options && input.options.length > 0) {
+            optionsStr = `\n    Available options: ${input.options.join(", ")}`;
+          }
+          return `  - ${input.name} (ID: ${input.id})${input.required ? " [REQUIRED]" : ""}${optionsStr}`;
+        })
         .join("\n")}`,
   )
   .join("\n")}
@@ -162,6 +201,12 @@ You: "I heard John Doe for Full Name. Is that correct?"
 User: "Yes"
 You: [Call confirm_update]
 You: "Great! Now, what's your email address?"
+
+Example with dropdown that doesn't match:
+User: "My nationality is American"
+You: [Call update_form_field with field_id="nationality", value="American"]
+System: Automatically maps to "Other" (since American is not in the list)
+You: "I've selected 'Other' for Nationality since American wasn't in the predefined list. Is that correct?"
 
 Be conversational, helpful, and always confirm before moving to the next field.`,
       tools,
