@@ -1,13 +1,20 @@
-import { SerialPort } from "serialport";
-
-let port;
+let port, parser;
 
 async function getPort() {
   if (!port) {
-    port = new SerialPort({
-      path: "/dev/cu.usbserial-110", // replace with your Arduino port
+    // Only import on the server at runtime
+    const { SerialPortStream } = await import("@serialport/stream");
+    const Bindings = (await import("@serialport/bindings")).default;
+    const { ReadlineParser } = await import("@serialport/parser-readline");
+
+    port = new SerialPortStream({
+      path: "/dev/cu.usbserial-110",
       baudRate: 9600,
+      binding: Bindings, // required for stream to work
     });
+
+    parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
+    parser.on("data", (data) => console.log("Arduino:", data));
 
     port.on("open", () => console.log("✅ Serial port opened"));
     port.on("error", (err) => console.error("❌ Serial port error:", err));
@@ -18,13 +25,11 @@ async function getPort() {
 export async function POST(req) {
   try {
     const { message } = await req.json();
-
     if (!message) return new Response(JSON.stringify({ error: "Missing message" }), { status: 400 });
 
     const serialPort = await getPort();
-
     await new Promise((resolve, reject) => {
-      serialPort.write(message, (err) => (err ? reject(err) : resolve()));
+      serialPort.write(message + "\n", (err) => (err ? reject(err) : resolve()));
     });
 
     console.log("✅ Sent:", message);

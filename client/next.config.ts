@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  webpack: (config) => {
+    config.externals.push("serialport");
+    return config;
+  },
+  serverExternalPackages: ["serialport"],
 };
 
 export default nextConfig;

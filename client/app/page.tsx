@@ -11,12 +11,15 @@ import backgroundImage from "@/public/homepage/Police-patrolling.jpg";
 export default function Home() {
   const [msg, setMsg] = useState("");
 
-  async function turnOn() {
-    await fetch("/api/sendToArduino", {
+  async function sendValue(value: "0" | "1") {
+    const res = await fetch("http://localhost:8080/send", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: "1" }),
+      body: JSON.stringify({ value }),
     });
+
+    const data = await res.json();
+    console.log(data);
   }
 
   async function turnOff() {
@@ -63,13 +66,13 @@ export default function Home() {
           />
           <div className="flex gap-4 mt-6">
             <button
-              onClick={turnOn}
+              onClick={() => sendValue("1")}
               className="bg-green-500 text-white px-4 py-2 rounded shadow-md hover:bg-green-600"
             >
               Turn LED On
             </button>
             <button
-              onClick={turnOff}
+              onClick={() => sendValue("0")}
               className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600"
             >
               Turn LED Off
