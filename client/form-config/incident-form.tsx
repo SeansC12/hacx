@@ -81,5 +81,10 @@ export const incidentFormConfig: FormConfig = {
         },
       ],
     },
+    {
+      name: "Preview",
+      description: "Preview the generated report as a PDF before final submission",
+      inputs: [],
+    },
   ],
 };

@@ -66,6 +66,11 @@ export function ReportForm({ config }: ReportFormProps) {
     }
   };
 
+  const handleSubmit = () => {
+    // Placeholder submission logic
+    console.log("Submit:", formData);
+  };
+
   return (
     <div className="flex h-full justify-center bg-gray-50">
       <div className="flex w-full max-w-[1200px] min-[670px]:px-8 lg:px-0">
@@ -82,19 +87,47 @@ export function ReportForm({ config }: ReportFormProps) {
               section={config.sections[currentSection]}
               values={formData}
               onChange={updateFormData}
-              belowDescription={
-                config.sections[currentSection].name ===
-                  "Personal Information" && (
-                  <LogInWithSingpassButton
-                    onClick={() => {}}
-                    className="mt-3 h-10 cursor-pointer select-none"
-                  />
-                )
-              }
+              belowDescription={(() => {
+                const name = config.sections[currentSection].name;
+                if (name === "Personal Information") {
+                  return (
+                    <LogInWithSingpassButton
+                      onClick={() => {}}
+                      className="mt-3 h-10 cursor-pointer select-none"
+                    />
+                  );
+                }
+                if (name === "Preview") {
+                  return (
+                    <div className="mt-4 space-y-2">
+                      <div className="overflow-hidden rounded-md border bg-white shadow">
+                        <iframe
+                          src="/form.pdf"
+                          title="Report preview"
+                          className="h-[600px] w-full"
+                        />
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        If the PDF does not load correctly,{' '}
+                        <a
+                          href="/form.pdf"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline"
+                        >
+                          open it in a new tab
+                        </a>
+                        .
+                      </p>
+                    </div>
+                  );
+                }
+                return undefined;
+              })()}
             />
           </div>
 
-          <div className="flex max-w-2xl justify-between">
+          <div className="flex items-center justify-between">
             <Button
               onClick={handlePrev}
               disabled={!canGoToPrev()}
@@ -104,9 +137,7 @@ export function ReportForm({ config }: ReportFormProps) {
             </Button>
 
             {currentSection === config.sections.length - 1 ? (
-              <Button onClick={() => console.log("Submit:", formData)}>
-                Submit
-              </Button>
+              <Button onClick={handleSubmit}>Submit Report</Button>
             ) : (
               <Button onClick={handleNext} disabled={!canGoToNext()}>
                 Next
